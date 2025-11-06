@@ -72,20 +72,12 @@
             #canvasContainer {
                 box-shadow: none;
                 padding: 0;
-                position: fixed;
-                left: 50%;
-                top: 50%;
-                width: 200mm;
-                height: 80mm;
-                transform: translate(-50%, -50%) rotate(90deg);
-                transform-origin: center center;
             }
 
             canvas {
                 border: none;
-                /* Después de rotar, el canvas de 200mm×80mm se ve como 80mm×200mm */
-                width: 200mm !important;
-                height: 80mm !important;
+                width: 80mm !important;
+                height: 200mm !important;
                 display: block;
             }
 
@@ -111,9 +103,9 @@
         const DPI = 600;
         const mmToPx = (mm) => (mm * DPI) / 25.4;
 
-        // Dimensiones de la papeleta
-        const WIDTH = mmToPx(200);  // 200mm
-        const HEIGHT = mmToPx(80);   // 80mm
+        // Dimensiones de la papeleta en VERTICAL
+        const WIDTH = mmToPx(80);   // 80mm de ancho
+        const HEIGHT = mmToPx(200); // 200mm de alto
 
         // Obtener canvas y contexto
         const canvas = document.getElementById('papeleta');
@@ -124,7 +116,7 @@
         canvas.height = HEIGHT;
 
         // Escalar para vista en pantalla (más pequeño para ver completo)
-        const SCALE = 0.5;
+        const SCALE = 0.4;
         canvas.style.width = (WIDTH * SCALE) + 'px';
         canvas.style.height = (HEIGHT * SCALE) + 'px';
 
@@ -145,12 +137,12 @@
         // Función para dibujar texto con línea debajo
         function drawFieldWithLine(label, value, x, y, width) {
             // Label
-            ctx.font = 'bold ' + mmToPx(3) + 'px Arial';
+            ctx.font = 'bold ' + mmToPx(2.5) + 'px Arial';
             ctx.fillStyle = '#000';
             ctx.fillText(label, x, y);
 
             // Value
-            ctx.font = mmToPx(3.5) + 'px Arial';
+            ctx.font = mmToPx(3) + 'px Arial';
             ctx.fillStyle = '#000';
             ctx.fillText(value, x, y + mmToPx(5));
 
@@ -181,7 +173,7 @@
         // Función principal para dibujar la papeleta
         function dibujarPapeleta() {
             const datos = getURLParams();
-            const padding = mmToPx(10);
+            const padding = mmToPx(5);
 
             // Fondo blanco
             ctx.fillStyle = '#FFFFFF';
@@ -193,27 +185,30 @@
             ctx.strokeRect(4, 4, WIDTH - 8, HEIGHT - 8);
 
             // ===== HEADER =====
-            let currentY = padding;
-
-            // Número de papeleta (esquina superior derecha)
-            ctx.font = mmToPx(3) + 'px Arial';
-            ctx.fillStyle = '#000';
-            ctx.textAlign = 'right';
-            ctx.fillText('N°: ' + datos.numero, WIDTH - padding, currentY + mmToPx(3));
+            let currentY = padding + mmToPx(5);
 
             // Título principal
-            ctx.font = 'bold ' + mmToPx(6) + 'px Arial';
+            ctx.font = 'bold ' + mmToPx(4.5) + 'px Arial';
             ctx.fillStyle = '#000';
             ctx.textAlign = 'center';
-            ctx.fillText('CAJA DE AHORRO TUPAK RANTINA', WIDTH / 2, currentY + mmToPx(5));
+            ctx.fillText('CAJA DE AHORRO', WIDTH / 2, currentY);
+            
+            currentY += mmToPx(6);
+            ctx.fillText('TUPAK RANTINA', WIDTH / 2, currentY);
 
             // Subtítulo
-            ctx.font = mmToPx(3.5) + 'px Arial';
+            currentY += mmToPx(5);
+            ctx.font = mmToPx(3) + 'px Arial';
             ctx.fillStyle = '#000';
-            ctx.fillText('Papeleta de Operación', WIDTH / 2, currentY + mmToPx(9));
+            ctx.fillText('Papeleta de Operación', WIDTH / 2, currentY);
+
+            // Número de papeleta
+            currentY += mmToPx(5);
+            ctx.font = 'bold ' + mmToPx(2.8) + 'px Arial';
+            ctx.fillText('N°: ' + datos.numero, WIDTH / 2, currentY);
 
             // Línea separadora
-            currentY += mmToPx(12);
+            currentY += mmToPx(4);
             ctx.strokeStyle = '#000';
             ctx.lineWidth = 4;
             ctx.beginPath();
@@ -222,25 +217,27 @@
             ctx.stroke();
 
             // ===== CONTENIDO =====
-            currentY += mmToPx(5);
+            currentY += mmToPx(8);
             ctx.textAlign = 'left';
 
-            // Columna izquierda
-            const col1X = padding;
-            const col2X = WIDTH / 2 + mmToPx(5);
-            const fieldWidth = WIDTH / 2 - padding - mmToPx(10);
+            const fieldX = padding + mmToPx(2);
+            const fieldWidth = WIDTH - padding * 2 - mmToPx(4);
 
-            // Fecha y Hora
-            drawFieldWithLine('Fecha:', datos.fecha, col1X, currentY, fieldWidth);
-            drawFieldWithLine('Hora:', datos.hora, col2X, currentY, fieldWidth);
-
+            // Fecha
+            drawFieldWithLine('Fecha:', datos.fecha, fieldX, currentY, fieldWidth);
             currentY += mmToPx(12);
 
-            // Socio y DNI
-            drawFieldWithLine('Socio:', datos.socio, col1X, currentY, fieldWidth);
-            drawFieldWithLine('DNI:', datos.dni, col2X, currentY, fieldWidth);
+            // Hora
+            drawFieldWithLine('Hora:', datos.hora, fieldX, currentY, fieldWidth);
+            currentY += mmToPx(12);
 
-            currentY += mmToPx(14);
+            // Socio
+            drawFieldWithLine('Socio:', datos.socio, fieldX, currentY, fieldWidth);
+            currentY += mmToPx(12);
+
+            // DNI
+            drawFieldWithLine('DNI:', datos.dni, fieldX, currentY, fieldWidth);
+            currentY += mmToPx(15);
 
             // Tipo de operación (centrado con recuadro)
             ctx.font = 'bold ' + mmToPx(3) + 'px Arial';
@@ -248,10 +245,10 @@
             ctx.textAlign = 'center';
             ctx.fillText('Tipo de Operación:', WIDTH / 2, currentY);
 
-            currentY += mmToPx(5);
-            const tipoWidth = mmToPx(50);
-            const tipoHeight = mmToPx(8);
-            const tipoX = (WIDTH - tipoWidth) / 2;
+            currentY += mmToPx(6);
+            const tipoWidth = WIDTH - padding * 4;
+            const tipoHeight = mmToPx(12);
+            const tipoX = padding * 2;
 
             // Recuadro para tipo de operación
             ctx.strokeStyle = '#000';
@@ -259,23 +256,23 @@
             roundRect(tipoX, currentY, tipoWidth, tipoHeight, mmToPx(2));
             ctx.stroke();
 
-            ctx.font = 'bold ' + mmToPx(4.5) + 'px Arial';
+            ctx.font = 'bold ' + mmToPx(5) + 'px Arial';
             ctx.fillStyle = '#000';
             ctx.textAlign = 'center';
-            ctx.fillText(datos.tipo.toUpperCase(), WIDTH / 2, currentY + mmToPx(5.5));
+            ctx.fillText(datos.tipo.toUpperCase(), WIDTH / 2, currentY + mmToPx(8));
 
-            currentY += mmToPx(12);
+            currentY += mmToPx(18);
 
             // Monto (destacado)
-            ctx.font = 'bold ' + mmToPx(3) + 'px Arial';
+            ctx.font = 'bold ' + mmToPx(3.5) + 'px Arial';
             ctx.fillStyle = '#000';
             ctx.textAlign = 'center';
             ctx.fillText('Monto:', WIDTH / 2, currentY);
 
-            currentY += mmToPx(5);
-            const montoWidth = mmToPx(70);
-            const montoHeight = mmToPx(10);
-            const montoX = (WIDTH - montoWidth) / 2;
+            currentY += mmToPx(6);
+            const montoWidth = WIDTH - padding * 4;
+            const montoHeight = mmToPx(15);
+            const montoX = padding * 2;
 
             // Recuadro para monto
             ctx.strokeStyle = '#000';
@@ -283,41 +280,55 @@
             roundRect(montoX, currentY, montoWidth, montoHeight, mmToPx(2));
             ctx.stroke();
 
-            ctx.font = 'bold ' + mmToPx(6) + 'px Arial';
+            ctx.font = 'bold ' + mmToPx(8) + 'px Arial';
             ctx.fillStyle = '#000';
             ctx.textAlign = 'center';
             const montoFormateado = parseFloat(datos.monto).toFixed(2);
-            ctx.fillText('S/ ' + montoFormateado, WIDTH / 2, currentY + mmToPx(7));
+            ctx.fillText('S/ ' + montoFormateado, WIDTH / 2, currentY + mmToPx(10));
 
             // ===== FOOTER - FIRMAS =====
-            const footerY = HEIGHT - mmToPx(12);
+            currentY = HEIGHT - mmToPx(25);
 
-            // Líneas de firma
-            const firmaWidth = mmToPx(60);
-            const firma1X = padding + mmToPx(10);
-            const firma2X = WIDTH - padding - mmToPx(10) - firmaWidth;
+            // Línea separadora antes de firmas
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(padding, currentY);
+            ctx.lineTo(WIDTH - padding, currentY);
+            ctx.stroke();
+
+            currentY += mmToPx(8);
+
+            // Firma del Socio
+            const firmaWidth = WIDTH - padding * 4;
+            const firmaX = padding * 2;
 
             ctx.strokeStyle = '#000';
             ctx.lineWidth = 2;
-
-            // Línea firma socio
             ctx.beginPath();
-            ctx.moveTo(firma1X, footerY);
-            ctx.lineTo(firma1X + firmaWidth, footerY);
+            ctx.moveTo(firmaX, currentY);
+            ctx.lineTo(firmaX + firmaWidth, currentY);
             ctx.stroke();
 
-            // Línea firma cajero
-            ctx.beginPath();
-            ctx.moveTo(firma2X, footerY);
-            ctx.lineTo(firma2X + firmaWidth, footerY);
-            ctx.stroke();
-
-            // Textos de firma
-            ctx.font = mmToPx(2.8) + 'px Arial';
+            ctx.font = mmToPx(2.5) + 'px Arial';
             ctx.fillStyle = '#000';
             ctx.textAlign = 'center';
-            ctx.fillText('Firma del Socio', firma1X + firmaWidth / 2, footerY + mmToPx(4));
-            ctx.fillText('Firma del Cajero', firma2X + firmaWidth / 2, footerY + mmToPx(4));
+            ctx.fillText('Firma del Socio', WIDTH / 2, currentY + mmToPx(4));
+
+            currentY += mmToPx(10);
+
+            // Firma del Cajero
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(firmaX, currentY);
+            ctx.lineTo(firmaX + firmaWidth, currentY);
+            ctx.stroke();
+
+            ctx.font = mmToPx(2.5) + 'px Arial';
+            ctx.fillStyle = '#000';
+            ctx.textAlign = 'center';
+            ctx.fillText('Firma del Cajero', WIDTH / 2, currentY + mmToPx(4));
         }
 
         // Función para imprimir
