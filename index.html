@@ -107,8 +107,8 @@
     </div>
 
     <script>
-        // Conversión de mm a pixels (300 DPI para alta calidad)
-        const DPI = 300;
+        // Conversión de mm a pixels (600 DPI para máxima calidad de impresión)
+        const DPI = 600;
         const mmToPx = (mm) => (mm * DPI) / 25.4;
 
         // Dimensiones de la papeleta
@@ -146,7 +146,7 @@
         function drawFieldWithLine(label, value, x, y, width) {
             // Label
             ctx.font = 'bold ' + mmToPx(3) + 'px Arial';
-            ctx.fillStyle = '#666';
+            ctx.fillStyle = '#000';
             ctx.fillText(label, x, y);
 
             // Value
@@ -155,8 +155,8 @@
             ctx.fillText(value, x, y + mmToPx(5));
 
             // Line
-            ctx.strokeStyle = '#999';
-            ctx.lineWidth = 1;
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 2;
             ctx.beginPath();
             ctx.moveTo(x, y + mmToPx(6));
             ctx.lineTo(x + width, y + mmToPx(6));
@@ -188,34 +188,34 @@
             ctx.fillRect(0, 0, WIDTH, HEIGHT);
 
             // Borde exterior
-            ctx.strokeStyle = '#333';
-            ctx.lineWidth = 6;
-            ctx.strokeRect(3, 3, WIDTH - 6, HEIGHT - 6);
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 8;
+            ctx.strokeRect(4, 4, WIDTH - 8, HEIGHT - 8);
 
             // ===== HEADER =====
             let currentY = padding;
 
             // Número de papeleta (esquina superior derecha)
             ctx.font = mmToPx(3) + 'px Arial';
-            ctx.fillStyle = '#666';
+            ctx.fillStyle = '#000';
             ctx.textAlign = 'right';
             ctx.fillText('N°: ' + datos.numero, WIDTH - padding, currentY + mmToPx(3));
 
             // Título principal
             ctx.font = 'bold ' + mmToPx(6) + 'px Arial';
-            ctx.fillStyle = '#2c5aa0';
+            ctx.fillStyle = '#000';
             ctx.textAlign = 'center';
             ctx.fillText('CAJA DE AHORRO TUPAK RANTINA', WIDTH / 2, currentY + mmToPx(5));
 
             // Subtítulo
             ctx.font = mmToPx(3.5) + 'px Arial';
-            ctx.fillStyle = '#666';
+            ctx.fillStyle = '#000';
             ctx.fillText('Papeleta de Operación', WIDTH / 2, currentY + mmToPx(9));
 
             // Línea separadora
             currentY += mmToPx(12);
-            ctx.strokeStyle = '#333';
-            ctx.lineWidth = 3;
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 4;
             ctx.beginPath();
             ctx.moveTo(padding, currentY);
             ctx.lineTo(WIDTH - padding, currentY);
@@ -244,7 +244,7 @@
 
             // Tipo de operación (centrado con recuadro)
             ctx.font = 'bold ' + mmToPx(3) + 'px Arial';
-            ctx.fillStyle = '#666';
+            ctx.fillStyle = '#000';
             ctx.textAlign = 'center';
             ctx.fillText('Tipo de Operación:', WIDTH / 2, currentY);
 
@@ -254,13 +254,13 @@
             const tipoX = (WIDTH - tipoWidth) / 2;
 
             // Recuadro para tipo de operación
-            ctx.strokeStyle = '#2c5aa0';
-            ctx.lineWidth = 3;
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 4;
             roundRect(tipoX, currentY, tipoWidth, tipoHeight, mmToPx(2));
             ctx.stroke();
 
             ctx.font = 'bold ' + mmToPx(4.5) + 'px Arial';
-            ctx.fillStyle = '#2c5aa0';
+            ctx.fillStyle = '#000';
             ctx.textAlign = 'center';
             ctx.fillText(datos.tipo.toUpperCase(), WIDTH / 2, currentY + mmToPx(5.5));
 
@@ -268,7 +268,7 @@
 
             // Monto (destacado)
             ctx.font = 'bold ' + mmToPx(3) + 'px Arial';
-            ctx.fillStyle = '#666';
+            ctx.fillStyle = '#000';
             ctx.textAlign = 'center';
             ctx.fillText('Monto:', WIDTH / 2, currentY);
 
@@ -278,13 +278,13 @@
             const montoX = (WIDTH - montoWidth) / 2;
 
             // Recuadro para monto
-            ctx.strokeStyle = '#2c5aa0';
-            ctx.lineWidth = 3;
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 4;
             roundRect(montoX, currentY, montoWidth, montoHeight, mmToPx(2));
             ctx.stroke();
 
             ctx.font = 'bold ' + mmToPx(6) + 'px Arial';
-            ctx.fillStyle = '#2c5aa0';
+            ctx.fillStyle = '#000';
             ctx.textAlign = 'center';
             const montoFormateado = parseFloat(datos.monto).toFixed(2);
             ctx.fillText('S/ ' + montoFormateado, WIDTH / 2, currentY + mmToPx(7));
@@ -297,8 +297,8 @@
             const firma1X = padding + mmToPx(10);
             const firma2X = WIDTH - padding - mmToPx(10) - firmaWidth;
 
-            ctx.strokeStyle = '#333';
-            ctx.lineWidth = 1;
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 2;
 
             // Línea firma socio
             ctx.beginPath();
@@ -314,7 +314,7 @@
 
             // Textos de firma
             ctx.font = mmToPx(2.8) + 'px Arial';
-            ctx.fillStyle = '#666';
+            ctx.fillStyle = '#000';
             ctx.textAlign = 'center';
             ctx.fillText('Firma del Socio', firma1X + firmaWidth / 2, footerY + mmToPx(4));
             ctx.fillText('Firma del Cajero', firma2X + firmaWidth / 2, footerY + mmToPx(4));
