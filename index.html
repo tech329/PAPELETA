@@ -60,6 +60,10 @@
                 background-color: white;
                 padding: 0;
                 margin: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
             }
 
             .controls {
@@ -70,24 +74,22 @@
                 box-shadow: none;
                 padding: 0;
                 margin: 0;
-                display: block;
-                width: 80mm;
-                transform: rotate(90deg) translateY(-80mm);
-                transform-origin: top left;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transform: rotate(90deg);
             }
 
             canvas {
                 border: none;
-                width: 200mm !important;
-                height: 80mm !important;
-                display: block;
+                width: 100vh !important;
+                height: auto !important;
+                max-height: 100vw;
                 image-rendering: -webkit-optimize-contrast;
                 image-rendering: crisp-edges;
-                image-rendering: pixelated;
             }
 
             @page {
-                size: 80mm auto;
                 margin: 0;
             }
         }
