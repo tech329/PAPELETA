@@ -2,345 +2,200 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Papeleta - Caja de Ahorro Tupak Rantina</title>
+    <title>Papeleta Caja de Ahorro Tupak Rantina</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            color-scheme: light;
+            font-family: "Segoe UI", Arial, sans-serif;
         }
 
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            padding: 20px;
+            margin: 0;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            background: #f0f0f0;
         }
 
-        #canvasContainer {
-            background-color: white;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 10px;
-            border-radius: 5px;
+        .page {
+            position: relative;
+            width: 80mm;
+            height: 297mm;
+            box-sizing: border-box;
+            background: #ffffff;
+            border: 1px solid #cccccc;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: visible;
         }
 
-        canvas {
-            display: block;
-            border: 1px solid #ccc;
+        .ticket {
+            position: absolute;
+            top: 0;
+            left: 80mm;
+            width: 200mm;
+            height: 80mm;
+            padding: 8mm 10mm;
+            box-sizing: border-box;
+            background: #ffffff;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            gap: 4mm;
+            transform-origin: top left;
+            transform: rotate(90deg);
         }
 
-        .controls {
-            margin-top: 20px;
+        .ticket__header,
+        .ticket__footer {
             display: flex;
-            gap: 10px;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        button {
-            padding: 10px 20px;
-            font-size: 14px;
-            cursor: pointer;
-            background-color: #2c5aa0;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            transition: background-color 0.3s;
+        .ticket__header h1 {
+            margin: 0;
+            font-size: 14pt;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        button:hover {
-            background-color: #1e3d70;
+        .ticket__section {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 2mm 6mm;
+            font-size: 10pt;
+        }
+
+        .ticket__item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5mm;
+        }
+
+        .ticket__label {
+            font-size: 8pt;
+            text-transform: uppercase;
+            color: #555555;
+            line-height: 1.2;
+        }
+
+        .ticket__value {
+            font-size: 10pt;
+            font-weight: 600;
+            line-height: 1.25;
+        }
+
+        .ticket__footer {
+            font-size: 8pt;
+            text-transform: uppercase;
+            color: #555555;
+            padding-top: 2mm;
+        }
+
+        @page {
+            size: 80mm 297mm;
+            margin: 0;
         }
 
         @media print {
             body {
-                background-color: white;
-                padding: 0;
-                margin: 0;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                min-height: 100vh;
+                background: #ffffff;
             }
 
-            .controls {
-                display: none;
-            }
-
-            #canvasContainer {
+            .page {
                 box-shadow: none;
-                padding: 0;
-                margin: 0;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                transform: rotate(90deg);
-            }
-
-            canvas {
-                border: none;
-                width: 100vh !important;
-                height: auto !important;
-                max-height: 100vw;
-                image-rendering: -webkit-optimize-contrast;
-                image-rendering: crisp-edges;
-            }
-
-            @page {
-                margin: 0;
             }
         }
     </style>
 </head>
 <body>
-    <div id="canvasContainer">
-        <canvas id="papeleta"></canvas>
-    </div>
-
-    <div class="controls">
-        <button onclick="imprimirPapeleta()">🖨️ Imprimir</button>
-        <button onclick="descargarPapeleta()">💾 Descargar PNG</button>
+    <div class="page">
+        <div class="ticket" id="ticket">
+            <div class="ticket__header">
+                <h1>Caja de Ahorro Tupak Rantina</h1>
+                <div>
+                    <div>RUC 20601234567</div>
+                    <div>Tel. (01) 555-1234</div>
+                </div>
+            </div>
+            <div class="ticket__section" id="ticket-content">
+                <div class="ticket__item">
+                    <span class="ticket__label">Número de papeleta</span>
+                    <span class="ticket__value" data-field="numero"></span>
+                </div>
+                <div class="ticket__item">
+                    <span class="ticket__label">Fecha</span>
+                    <span class="ticket__value" data-field="fecha"></span>
+                </div>
+                <div class="ticket__item">
+                    <span class="ticket__label">Socio</span>
+                    <span class="ticket__value" data-field="socio"></span>
+                </div>
+                <div class="ticket__item">
+                    <span class="ticket__label">Documento</span>
+                    <span class="ticket__value" data-field="documento"></span>
+                </div>
+                <div class="ticket__item">
+                    <span class="ticket__label">Tipo de operación</span>
+                    <span class="ticket__value" data-field="tipo"></span>
+                </div>
+                <div class="ticket__item">
+                    <span class="ticket__label">Monto</span>
+                    <span class="ticket__value" data-field="monto"></span>
+                </div>
+                <div class="ticket__item">
+                    <span class="ticket__label">Concepto</span>
+                    <span class="ticket__value" data-field="concepto"></span>
+                </div>
+                <div class="ticket__item">
+                    <span class="ticket__label">Responsable</span>
+                    <span class="ticket__value" data-field="responsable"></span>
+                </div>
+            </div>
+            <div class="ticket__footer">
+                <div>Firma del socio ____________________</div>
+                <div>Firma del cajero ____________________</div>
+            </div>
+        </div>
     </div>
 
     <script>
-        // Conversión de mm a pixels (600 DPI para máxima calidad de impresión)
-        const DPI = 600;
-        const mmToPx = (mm) => (mm * DPI) / 25.4;
-
-        // Dimensiones de la papeleta
-        const WIDTH = mmToPx(200);  // 200mm
-        const HEIGHT = mmToPx(80);   // 80mm
-
-        // Obtener canvas y contexto
-        const canvas = document.getElementById('papeleta');
-        const ctx = canvas.getContext('2d', { alpha: false });
-
-        // Configurar tamaño del canvas
-        canvas.width = WIDTH;
-        canvas.height = HEIGHT;
-
-        // Configurar calidad de renderizado
-        ctx.imageSmoothingEnabled = false;
-        ctx.textRendering = 'geometricPrecision';
-
-        // Escalar para vista en pantalla (más pequeño para ver completo)
-        const SCALE = 0.5;
-        canvas.style.width = (WIDTH * SCALE) + 'px';
-        canvas.style.height = (HEIGHT * SCALE) + 'px';
-
-        // Función para obtener parámetros de la URL
-        function getURLParams() {
+        function parseQueryParams() {
             const params = new URLSearchParams(window.location.search);
-            return {
-                numero: params.get('numero') || '001234',
-                fecha: params.get('fecha') || new Date().toLocaleDateString('es-PE'),
-                hora: params.get('hora') || new Date().toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' }),
-                socio: params.get('socio') || 'Juan Carlos Pérez López',
-                dni: params.get('dni') || '12345678',
-                tipo: params.get('tipo') || 'DEPOSITO',
-                monto: params.get('monto') || '150.00'
+            const defaults = {
+                numero: 'TR-2025-001',
+                fecha: new Date().toLocaleDateString('es-PE'),
+                socio: 'María Quispe Huamán',
+                documento: 'DNI 43765432',
+                tipo: 'Depósito',
+                monto: 'S/ 500.00',
+                concepto: 'Ahorro Programado Mensual',
+                responsable: 'Carlos Gutiérrez'
             };
+
+            return Object.fromEntries(
+                Object.keys(defaults).map(key => [
+                    key,
+                    params.get(key) ? params.get(key).trim() : defaults[key]
+                ])
+            );
         }
 
-        // Función para dibujar texto con línea debajo
-        function drawFieldWithLine(label, value, x, y, width) {
-            // Label
-            ctx.font = 'bold ' + mmToPx(3) + 'px Arial';
-            ctx.fillStyle = '#000';
-            ctx.fillText(label, x, y);
-
-            // Value
-            ctx.font = mmToPx(3.5) + 'px Arial';
-            ctx.fillStyle = '#000';
-            ctx.fillText(value, x, y + mmToPx(5));
-
-            // Line
-            ctx.strokeStyle = '#000';
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.moveTo(x, y + mmToPx(6));
-            ctx.lineTo(x + width, y + mmToPx(6));
-            ctx.stroke();
+        function applyTicketData(data) {
+            document
+                .querySelectorAll('[data-field]')
+                .forEach(el => {
+                    const field = el.getAttribute('data-field');
+                    el.textContent = data[field] || '';
+                });
         }
 
-        // Función para dibujar rectángulo redondeado
-        function roundRect(x, y, width, height, radius) {
-            ctx.beginPath();
-            ctx.moveTo(x + radius, y);
-            ctx.lineTo(x + width - radius, y);
-            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
-            ctx.lineTo(x + width, y + height - radius);
-            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-            ctx.lineTo(x + radius, y + height);
-            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
-            ctx.lineTo(x, y + radius);
-            ctx.quadraticCurveTo(x, y, x + radius, y);
-            ctx.closePath();
+        // Coordinates query parameters with the template.
+        const ticketData = parseQueryParams();
+        if (ticketData.tipo) {
+            ticketData.tipo = ticketData.tipo.charAt(0).toUpperCase() + ticketData.tipo.slice(1).toLowerCase();
         }
-
-        // Función principal para dibujar la papeleta
-        function dibujarPapeleta() {
-            const datos = getURLParams();
-            const padding = mmToPx(10);
-
-            // Fondo blanco
-            ctx.fillStyle = '#FFFFFF';
-            ctx.fillRect(0, 0, WIDTH, HEIGHT);
-
-            // Borde exterior
-            ctx.strokeStyle = '#000';
-            ctx.lineWidth = 8;
-            ctx.strokeRect(4, 4, WIDTH - 8, HEIGHT - 8);
-
-            // ===== HEADER =====
-            let currentY = padding;
-
-            // Número de papeleta (esquina superior derecha)
-            ctx.font = mmToPx(3) + 'px Arial';
-            ctx.fillStyle = '#000';
-            ctx.textAlign = 'right';
-            ctx.fillText('N°: ' + datos.numero, WIDTH - padding, currentY + mmToPx(3));
-
-            // Título principal
-            ctx.font = 'bold ' + mmToPx(6) + 'px Arial';
-            ctx.fillStyle = '#000';
-            ctx.textAlign = 'center';
-            ctx.fillText('CAJA DE AHORRO TUPAK RANTINA', WIDTH / 2, currentY + mmToPx(5));
-
-            // Subtítulo
-            ctx.font = mmToPx(3.5) + 'px Arial';
-            ctx.fillStyle = '#000';
-            ctx.fillText('Papeleta de Operación', WIDTH / 2, currentY + mmToPx(9));
-
-            // Línea separadora
-            currentY += mmToPx(12);
-            ctx.strokeStyle = '#000';
-            ctx.lineWidth = 4;
-            ctx.beginPath();
-            ctx.moveTo(padding, currentY);
-            ctx.lineTo(WIDTH - padding, currentY);
-            ctx.stroke();
-
-            // ===== CONTENIDO =====
-            currentY += mmToPx(5);
-            ctx.textAlign = 'left';
-
-            // Columna izquierda
-            const col1X = padding;
-            const col2X = WIDTH / 2 + mmToPx(5);
-            const fieldWidth = WIDTH / 2 - padding - mmToPx(10);
-
-            // Fecha y Hora
-            drawFieldWithLine('Fecha:', datos.fecha, col1X, currentY, fieldWidth);
-            drawFieldWithLine('Hora:', datos.hora, col2X, currentY, fieldWidth);
-
-            currentY += mmToPx(12);
-
-            // Socio y DNI
-            drawFieldWithLine('Socio:', datos.socio, col1X, currentY, fieldWidth);
-            drawFieldWithLine('DNI:', datos.dni, col2X, currentY, fieldWidth);
-
-            currentY += mmToPx(14);
-
-            // Tipo de operación (centrado con recuadro)
-            ctx.font = 'bold ' + mmToPx(3) + 'px Arial';
-            ctx.fillStyle = '#000';
-            ctx.textAlign = 'center';
-            ctx.fillText('Tipo de Operación:', WIDTH / 2, currentY);
-
-            currentY += mmToPx(5);
-            const tipoWidth = mmToPx(50);
-            const tipoHeight = mmToPx(8);
-            const tipoX = (WIDTH - tipoWidth) / 2;
-
-            // Recuadro para tipo de operación
-            ctx.strokeStyle = '#000';
-            ctx.lineWidth = 4;
-            roundRect(tipoX, currentY, tipoWidth, tipoHeight, mmToPx(2));
-            ctx.stroke();
-
-            ctx.font = 'bold ' + mmToPx(4.5) + 'px Arial';
-            ctx.fillStyle = '#000';
-            ctx.textAlign = 'center';
-            ctx.fillText(datos.tipo.toUpperCase(), WIDTH / 2, currentY + mmToPx(5.5));
-
-            currentY += mmToPx(12);
-
-            // Monto (destacado)
-            ctx.font = 'bold ' + mmToPx(3) + 'px Arial';
-            ctx.fillStyle = '#000';
-            ctx.textAlign = 'center';
-            ctx.fillText('Monto:', WIDTH / 2, currentY);
-
-            currentY += mmToPx(5);
-            const montoWidth = mmToPx(70);
-            const montoHeight = mmToPx(10);
-            const montoX = (WIDTH - montoWidth) / 2;
-
-            // Recuadro para monto
-            ctx.strokeStyle = '#000';
-            ctx.lineWidth = 4;
-            roundRect(montoX, currentY, montoWidth, montoHeight, mmToPx(2));
-            ctx.stroke();
-
-            ctx.font = 'bold ' + mmToPx(6) + 'px Arial';
-            ctx.fillStyle = '#000';
-            ctx.textAlign = 'center';
-            const montoFormateado = parseFloat(datos.monto).toFixed(2);
-            ctx.fillText('S/ ' + montoFormateado, WIDTH / 2, currentY + mmToPx(7));
-
-            // ===== FOOTER - FIRMAS =====
-            const footerY = HEIGHT - mmToPx(12);
-
-            // Líneas de firma
-            const firmaWidth = mmToPx(60);
-            const firma1X = padding + mmToPx(10);
-            const firma2X = WIDTH - padding - mmToPx(10) - firmaWidth;
-
-            ctx.strokeStyle = '#000';
-            ctx.lineWidth = 2;
-
-            // Línea firma socio
-            ctx.beginPath();
-            ctx.moveTo(firma1X, footerY);
-            ctx.lineTo(firma1X + firmaWidth, footerY);
-            ctx.stroke();
-
-            // Línea firma cajero
-            ctx.beginPath();
-            ctx.moveTo(firma2X, footerY);
-            ctx.lineTo(firma2X + firmaWidth, footerY);
-            ctx.stroke();
-
-            // Textos de firma
-            ctx.font = mmToPx(2.8) + 'px Arial';
-            ctx.fillStyle = '#000';
-            ctx.textAlign = 'center';
-            ctx.fillText('Firma del Socio', firma1X + firmaWidth / 2, footerY + mmToPx(4));
-            ctx.fillText('Firma del Cajero', firma2X + firmaWidth / 2, footerY + mmToPx(4));
-        }
-
-        // Función para imprimir
-        function imprimirPapeleta() {
-            window.print();
-        }
-
-        // Función para descargar como PNG
-        function descargarPapeleta() {
-            const link = document.createElement('a');
-            link.download = 'papeleta_' + getURLParams().numero + '.png';
-            link.href = canvas.toDataURL('image/png');
-            link.click();
-        }
-
-        // Dibujar la papeleta al cargar
-        dibujarPapeleta();
-
-        // Redibujar si cambia el tamaño de ventana
-        window.addEventListener('resize', dibujarPapeleta);
+        applyTicketData(ticketData);
     </script>
 </body>
 </html>
