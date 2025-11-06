@@ -97,6 +97,37 @@
             padding-top: 2mm;
         }
 
+        .ruc-badge {
+            display: inline-block;
+            background: #f0f0f0;
+            border: 1px solid #000000;
+            border-radius: 12px;
+            padding: 4px 12px;
+            font-size: 14pt;
+            line-height: 1.4;
+        }
+
+        .ruc-badge .label {
+            color: #000000;
+            font-weight: normal;
+        }
+
+        .ruc-badge .number {
+            color: #000000;
+            background: #ffffff;
+            padding: 2px 6px;
+            border-radius: 6px;
+            margin-left: 4px;
+        }
+
+        .ruc-badge .number .normal {
+            font-weight: normal;
+        }
+
+        .ruc-badge .number .bold {
+            font-weight: bold;
+        }
+
         @page {
             size: 80mm 297mm;
             margin: 0;
@@ -119,14 +150,13 @@
             <div class="ticket__header">
                 <h1>Caja de Ahorro Tupak Rantina</h1>
                 <div>
-                    <div>RUC 20601234567</div>
-                    <div>Tel. (01) 555-1234</div>
+                    <div><span class="ruc-badge"><span class="label">PAPELETA:</span><span class="number" data-field="numero-header"></span></span></div>
                 </div>
             </div>
             <div class="ticket__section" id="ticket-content">
                 <div class="ticket__item">
-                    <span class="ticket__label">Número de papeleta</span>
-                    <span class="ticket__value" data-field="numero"></span>
+                    <span class="ticket__label">Número de cuenta</span>
+                    <span class="ticket__value" data-field="cuenta"></span>
                 </div>
                 <div class="ticket__item">
                     <span class="ticket__label">Fecha</span>
@@ -137,7 +167,7 @@
                     <span class="ticket__value" data-field="socio"></span>
                 </div>
                 <div class="ticket__item">
-                    <span class="ticket__label">Documento</span>
+                    <span class="ticket__label">Cédula</span>
                     <span class="ticket__value" data-field="documento"></span>
                 </div>
                 <div class="ticket__item">
@@ -149,7 +179,7 @@
                     <span class="ticket__value" data-field="monto"></span>
                 </div>
                 <div class="ticket__item">
-                    <span class="ticket__label">Concepto</span>
+                    <span class="ticket__label">Monto en letras</span>
                     <span class="ticket__value" data-field="concepto"></span>
                 </div>
                 <div class="ticket__item">
@@ -158,8 +188,7 @@
                 </div>
             </div>
             <div class="ticket__footer">
-                <div>Firma del socio ____________________</div>
-                <div>Firma del cajero ____________________</div>
+                <div>Firma de <span data-field="socio-firma"></span> ____________________</div>
             </div>
         </div>
     </div>
@@ -167,14 +196,28 @@
     <script>
         function parseQueryParams() {
             const params = new URLSearchParams(window.location.search);
+            
+            // Función para formatear la fecha en español
+            function formatearFecha(fecha) {
+                const meses = [
+                    'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+                    'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
+                ];
+                const dia = fecha.getDate();
+                const mes = meses[fecha.getMonth()];
+                const anio = fecha.getFullYear();
+                return `${dia} de ${mes} de ${anio}`;
+            }
+            
             const defaults = {
-                numero: 'TR-2025-001',
-                fecha: new Date().toLocaleDateString('es-PE'),
+                numero: '00260',
+                cuenta: '1234567890',
+                fecha: formatearFecha(new Date()),
                 socio: 'María Quispe Huamán',
                 documento: 'DNI 43765432',
                 tipo: 'Depósito',
-                monto: 'S/ 500.00',
-                concepto: 'Ahorro Programado Mensual',
+                monto: 'USD 500.00',
+                concepto: 'Quinientos dólares con 00/100',
                 responsable: 'Carlos Gutiérrez'
             };
 
@@ -191,7 +234,33 @@
                 .querySelectorAll('[data-field]')
                 .forEach(el => {
                     const field = el.getAttribute('data-field');
-                    el.textContent = data[field] || '';
+                    if (field === 'socio-firma') {
+                        el.textContent = data['socio'] || '';
+                    } else if (field === 'numero-header') {
+                        // Formatear el número: ceros a la izquierda en normal, resto en negrita
+                        const numero = data['numero'] || '00000';
+                        const paddedNumero = numero.padStart(5, '0').slice(-5); // Asegurar 5 dígitos
+                        
+                        // Encontrar el primer dígito distinto de cero
+                        let primeraPosCero = 0;
+                        for (let i = 0; i < paddedNumero.length; i++) {
+                            if (paddedNumero[i] !== '0') {
+                                primeraPosCero = i;
+                                break;
+                            }
+                        }
+                        
+                        // Si todos son ceros
+                        if (primeraPosCero === 0 && paddedNumero === '00000') {
+                            el.innerHTML = `<span class="normal">${paddedNumero}</span>`;
+                        } else {
+                            const parteNormal = paddedNumero.slice(0, primeraPosCero);
+                            const parteNegrita = paddedNumero.slice(primeraPosCero);
+                            el.innerHTML = `<span class="normal">${parteNormal}</span><span class="bold">${parteNegrita}</span>`;
+                        }
+                    } else {
+                        el.textContent = data[field] || '';
+                    }
                 });
         }
 
