@@ -18,6 +18,253 @@
             background: #ffffff;
         }
 
+        /* Loader */
+        .loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loader-container.hidden {
+            display: none;
+        }
+
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #000;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loader-text {
+            margin-top: 20px;
+            font-size: 14pt;
+            color: #333;
+        }
+
+        /* Vista de pantalla */
+        .screen-view {
+            max-width: 600px;
+            width: 100%;
+            padding: 20px;
+            display: none;
+        }
+
+        .screen-view.loaded {
+            display: block;
+        }
+
+        .screen-view h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 18pt;
+        }
+
+        .data-summary {
+            border: 1px solid #000;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .data-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .data-row:last-child {
+            border-bottom: none;
+        }
+
+        .data-label {
+            font-weight: 600;
+            color: #000;
+        }
+
+        .data-value {
+            color: #333;
+        }
+
+        .badge-operation {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 10pt;
+        }
+
+        .badge-deposito {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #155724;
+        }
+
+        .badge-retiro {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #721c24;
+        }
+
+        .print-button {
+            width: 100%;
+            padding: 15px;
+            font-size: 16pt;
+            font-weight: bold;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+
+        .print-button.deposito {
+            background: #28a745;
+        }
+
+        .print-button.deposito:hover {
+            background: #218838;
+        }
+
+        .print-button.retiro {
+            background: #dc3545;
+        }
+
+        .print-button.retiro:hover {
+            background: #c82333;
+        }
+
+        .print-button:active {
+            transform: scale(0.98);
+        }
+
+        /* Modal de confirmación */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-content.deposito {
+            border: 3px solid #28a745;
+            background: #f0f9f4;
+        }
+
+        .modal-content.retiro {
+            border: 3px solid #dc3545;
+            background: #fdf4f5;
+        }
+
+        .modal-title {
+            font-size: 18pt;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .modal-message {
+            font-size: 14pt;
+            margin-bottom: 30px;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .modal-button {
+            flex: 1;
+            padding: 12px;
+            font-size: 14pt;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .modal-button.confirm {
+            background: #28a745;
+            color: #fff;
+        }
+
+        .modal-button.confirm.retiro {
+            background: #dc3545;
+        }
+
+        .modal-button.confirm:hover {
+            opacity: 0.9;
+        }
+
+        .modal-button.cancel {
+            background: #6c757d;
+            color: #fff;
+        }
+
+        .modal-button.cancel:hover {
+            background: #5a6268;
+        }
+
+        /* Vista de impresión (oculta en pantalla) */
+        .print-view {
+            display: none;
+        }
+
+        @media print {
+            .screen-view {
+                display: none !important;
+            }
+
+            .print-view {
+                display: block !important;
+            }
+
+            body {
+                background: #ffffff;
+            }
+        }
+
+        /* Estilos para la papeleta impresa */
+
         .page {
             position: relative;
             width: 80mm;
@@ -132,104 +379,344 @@
             size: 80mm 297mm;
             margin: 0;
         }
-
-        @media print {
-            body {
-                background: #ffffff;
-            }
-
-            .page {
-                box-shadow: none;
-            }
-        }
     </style>
 </head>
 <body>
-    <div class="page">
-        <div class="ticket" id="ticket">
-            <div class="ticket__header">
-                <h1>Caja de Ahorro Tupak Rantina</h1>
-                <div>
-                    <div><span class="ruc-badge"><span class="label">PAPELETA:</span><span class="number" data-field="numero-header"></span></span></div>
-                </div>
+    <!-- Loader -->
+    <div class="loader-container" id="loader">
+        <div class="loader"></div>
+        <div class="loader-text">Cargando datos...</div>
+    </div>
+
+    <!-- Vista de pantalla -->
+    <div class="screen-view">
+        <h2>Papeleta de Caja de Ahorro</h2>
+        <div class="data-summary">
+            <div class="data-row">
+                <span class="data-label">Papeleta N°:</span>
+                <span class="data-value" id="screen-numero"></span>
             </div>
-            <div class="ticket__section" id="ticket-content">
-                <div class="ticket__item">
-                    <span class="ticket__label">Número de cuenta</span>
-                    <span class="ticket__value" data-field="cuenta"></span>
-                </div>
-                <div class="ticket__item">
-                    <span class="ticket__label">Fecha</span>
-                    <span class="ticket__value" data-field="fecha"></span>
-                </div>
-                <div class="ticket__item">
-                    <span class="ticket__label">Socio</span>
-                    <span class="ticket__value" data-field="socio"></span>
-                </div>
-                <div class="ticket__item">
-                    <span class="ticket__label">Cédula</span>
-                    <span class="ticket__value" data-field="documento"></span>
-                </div>
-                <div class="ticket__item">
-                    <span class="ticket__label">Tipo de operación</span>
-                    <span class="ticket__value" data-field="tipo"></span>
-                </div>
-                <div class="ticket__item">
-                    <span class="ticket__label">Monto</span>
-                    <span class="ticket__value" data-field="monto"></span>
-                </div>
-                <div class="ticket__item">
-                    <span class="ticket__label">Monto en letras</span>
-                    <span class="ticket__value" data-field="concepto"></span>
-                </div>
-                <div class="ticket__item">
-                    <span class="ticket__label">Responsable</span>
-                    <span class="ticket__value" data-field="responsable"></span>
-                </div>
+            <div class="data-row">
+                <span class="data-label">Número de cuenta:</span>
+                <span class="data-value" id="screen-cuenta"></span>
             </div>
-            <div class="ticket__footer">
-                <div>Firma de <span data-field="socio-firma"></span> ____________________</div>
+            <div class="data-row">
+                <span class="data-label">Fecha:</span>
+                <span class="data-value" id="screen-fecha"></span>
+            </div>
+            <div class="data-row">
+                <span class="data-label">Socio:</span>
+                <span class="data-value" id="screen-socio"></span>
+            </div>
+            <div class="data-row">
+                <span class="data-label">Cédula:</span>
+                <span class="data-value" id="screen-documento"></span>
+            </div>
+            <div class="data-row">
+                <span class="data-label">Tipo de operación:</span>
+                <span class="data-value" id="screen-tipo"></span>
+            </div>
+            <div class="data-row">
+                <span class="data-label">Monto:</span>
+                <span class="data-value" id="screen-monto"></span>
+            </div>
+            <div class="data-row">
+                <span class="data-label">Monto en letras:</span>
+                <span class="data-value" id="screen-concepto"></span>
+            </div>
+            <div class="data-row">
+                <span class="data-label">Responsable:</span>
+                <span class="data-value" id="screen-responsable"></span>
+            </div>
+        </div>
+        <button class="print-button" id="print-btn" onclick="mostrarConfirmacion()">Imprimir Papeleta</button>
+    </div>
+
+    <!-- Modal de confirmación -->
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal-content" id="modal-content">
+            <div class="modal-title" id="modal-title">Confirmar Operación</div>
+            <div class="modal-message" id="modal-message"></div>
+            <div class="modal-buttons">
+                <button class="modal-button cancel" onclick="cerrarModal()">Cancelar</button>
+                <button class="modal-button confirm" id="modal-confirm" onclick="confirmarImpresion()">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vista de impresión (oculta) -->
+    <div class="print-view">
+        <div class="page">
+            <div class="ticket" id="ticket">
+                <div class="ticket__header">
+                    <h1>Caja de Ahorro Tupak Rantina</h1>
+                    <div>
+                        <div><span class="ruc-badge"><span class="label">PAPELETA:</span><span class="number" data-field="numero-header"></span></span></div>
+                    </div>
+                </div>
+                <div class="ticket__section" id="ticket-content">
+                    <div class="ticket__item">
+                        <span class="ticket__label">Número de cuenta</span>
+                        <span class="ticket__value" data-field="cuenta"></span>
+                    </div>
+                    <div class="ticket__item">
+                        <span class="ticket__label">Fecha</span>
+                        <span class="ticket__value" data-field="fecha"></span>
+                    </div>
+                    <div class="ticket__item">
+                        <span class="ticket__label">Socio</span>
+                        <span class="ticket__value" data-field="socio"></span>
+                    </div>
+                    <div class="ticket__item">
+                        <span class="ticket__label">Cédula</span>
+                        <span class="ticket__value" data-field="documento"></span>
+                    </div>
+                    <div class="ticket__item">
+                        <span class="ticket__label">Tipo de operación</span>
+                        <span class="ticket__value" data-field="tipo"></span>
+                    </div>
+                    <div class="ticket__item">
+                        <span class="ticket__label">Monto</span>
+                        <span class="ticket__value" data-field="monto"></span>
+                    </div>
+                    <div class="ticket__item">
+                        <span class="ticket__label">Monto en letras</span>
+                        <span class="ticket__value" data-field="concepto"></span>
+                    </div>
+                    <div class="ticket__item">
+                        <span class="ticket__label">Responsable</span>
+                        <span class="ticket__value" data-field="responsable"></span>
+                    </div>
+                </div>
+                <div class="ticket__footer">
+                    <div>Firma de <span data-field="socio-firma"></span> ____________________</div>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
+        // Función para convertir números a letras en español
+        function numeroALetras(num) {
+            const unidades = ['', 'UNO', 'DOS', 'TRES', 'CUATRO', 'CINCO', 'SEIS', 'SIETE', 'OCHO', 'NUEVE'];
+            const decenas = ['', '', 'VEINTE', 'TREINTA', 'CUARENTA', 'CINCUENTA', 'SESENTA', 'SETENTA', 'OCHENTA', 'NOVENTA'];
+            const especiales = ['DIEZ', 'ONCE', 'DOCE', 'TRECE', 'CATORCE', 'QUINCE', 'DIECISÉIS', 'DIECISIETE', 'DIECIOCHO', 'DIECINUEVE'];
+            const centenas = ['', 'CIENTO', 'DOSCIENTOS', 'TRESCIENTOS', 'CUATROCIENTOS', 'QUINIENTOS', 'SEISCIENTOS', 'SETECIENTOS', 'OCHOCIENTOS', 'NOVECIENTOS'];
+            
+            if (num === 0) return 'CERO';
+            if (num === 100) return 'CIEN';
+            if (num === 1) return 'UN';
+            
+            let resultado = '';
+            
+            // Miles
+            if (num >= 1000) {
+                const miles = Math.floor(num / 1000);
+                if (miles === 1) {
+                    resultado += 'MIL ';
+                } else {
+                    resultado += numeroALetras(miles) + ' MIL ';
+                }
+                num = num % 1000;
+            }
+            
+            // Centenas
+            if (num >= 100) {
+                resultado += centenas[Math.floor(num / 100)] + ' ';
+                num = num % 100;
+            }
+            
+            // Decenas y unidades
+            if (num >= 20) {
+                const dec = Math.floor(num / 10);
+                const uni = num % 10;
+                resultado += decenas[dec];
+                if (uni > 0) {
+                    resultado += ' Y ' + unidades[uni];
+                }
+            } else if (num >= 10) {
+                resultado += especiales[num - 10];
+            } else if (num > 0) {
+                resultado += unidades[num];
+            }
+            
+            return resultado.trim();
+        }
+
+        // Función para convertir monto a letras con formato
+        function montoEnLetras(monto) {
+            const numero = parseFloat(monto);
+            if (isNaN(numero)) return 'CERO DÓLARES CON 00/100';
+            
+            const parteEntera = Math.floor(numero);
+            const parteDecimal = Math.round((numero - parteEntera) * 100);
+            
+            const letrasEntero = numeroALetras(parteEntera);
+            const letrasDecimal = parteDecimal.toString().padStart(2, '0');
+            
+            let resultado = 'USD ' + letrasEntero;
+            if (parteEntera === 1) {
+                resultado += ' DÓLAR';
+            } else {
+                resultado += ' DÓLARES';
+            }
+            resultado += ' CON ' + letrasDecimal + '/100';
+            
+            return resultado;
+        }
+
+        // Función para detectar tipo de transacción (DEPOSITO o RETIRO)
+        function detectarTipoTransaccion(tipo) {
+            if (!tipo) return 'DEPOSITO';
+            
+            const tipoLower = tipo.toLowerCase()
+                .normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Remover acentos
+            
+            // Detectar retiro
+            if (tipoLower.includes('retiro') || tipoLower.includes('retiros')) {
+                return 'RETIRO';
+            }
+            
+            // Detectar depósito (por defecto)
+            if (tipoLower.includes('deposit') || tipoLower.includes('deposito') || tipoLower.includes('depositos')) {
+                return 'DEPOSITO';
+            }
+            
+            // Por defecto, si no se detecta, es depósito
+            return 'DEPOSITO';
+        }
+
+        // Función para obtener fecha/hora actual
+        function obtenerFechaHoraActual() {
+            const ahora = new Date();
+            
+            // Formato para pantalla: "7 de noviembre del 2025 17:45:36"
+            const meses = [
+                'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+                'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
+            ];
+            const dia = ahora.getDate();
+            const mes = meses[ahora.getMonth()];
+            const anio = ahora.getFullYear();
+            const horas = ahora.getHours().toString().padStart(2, '0');
+            const minutos = ahora.getMinutes().toString().padStart(2, '0');
+            const segundos = ahora.getSeconds().toString().padStart(2, '0');
+            
+            const fechaPantalla = `${dia} de ${mes} del ${anio} ${horas}:${minutos}:${segundos}`;
+            
+            // Formato ISO para webhook (zona horaria Ecuador UTC-5)
+            const offsetEcuador = -5 * 60; // -5 horas en minutos
+            const offsetActual = ahora.getTimezoneOffset();
+            const diferenciaMinutos = offsetEcuador - offsetActual;
+            const fechaEcuador = new Date(ahora.getTime() + diferenciaMinutos * 60000);
+            
+            // Formato ISO sin la Z (timezone local)
+            const year = fechaEcuador.getFullYear();
+            const month = (fechaEcuador.getMonth() + 1).toString().padStart(2, '0');
+            const day = fechaEcuador.getDate().toString().padStart(2, '0');
+            const hours = fechaEcuador.getHours().toString().padStart(2, '0');
+            const mins = fechaEcuador.getMinutes().toString().padStart(2, '0');
+            const secs = fechaEcuador.getSeconds().toString().padStart(2, '0');
+            
+            const fechaWebhook = `${year}-${month}-${day}T${hours}:${mins}:${secs}-05:00`;
+            
+            return {
+                pantalla: fechaPantalla,
+                webhook: fechaWebhook
+            };
+        }
+
+        // Función para obtener el siguiente número de papeleta
+        async function obtenerNumeroPapeleta() {
+            try {
+                console.log('Llamando al webhook...');
+                const response = await fetch('https://lpwebhook.luispinta.com/webhook/7be2f2d7-4f90-4f43-876c-bf8be2e478e4', {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                    },
+                    mode: 'cors',
+                    cache: 'no-cache'
+                });
+                
+                console.log('Respuesta recibida:', response);
+                console.log('Status:', response.status);
+                console.log('Status Text:', response.statusText);
+                
+                if (!response.ok) {
+                    console.warn('Respuesta no exitosa del webhook:', response.status);
+                    return '00001';
+                }
+                
+                const data = await response.json();
+                console.log('Datos parseados:', data);
+                console.log('Tipo de datos:', typeof data);
+                console.log('Es array?', Array.isArray(data));
+                
+                if (data && data[0] && data[0].papeletas && data[0].papeletas.length > 0) {
+                    const papeletas = data[0].papeletas;
+                    console.log('Papeletas encontradas:', papeletas);
+                    const ultimaPapeleta = Math.max(...papeletas);
+                    const siguientePapeleta = ultimaPapeleta + 1;
+                    console.log('Última papeleta:', ultimaPapeleta, '- Siguiente:', siguientePapeleta);
+                    return siguientePapeleta.toString().padStart(5, '0');
+                }
+                
+                console.warn('No se encontraron papeletas en la respuesta');
+                console.log('Estructura de datos recibida no coincide con lo esperado');
+                return '00001'; // Si no hay papeletas, empezar con 00001
+            } catch (error) {
+                console.error('Error al obtener número de papeleta:', error);
+                console.error('Tipo de error:', error.name);
+                console.error('Mensaje:', error.message);
+                console.warn('IMPORTANTE: Verifica que CORS esté habilitado en el webhook de n8n');
+                console.warn('Usando número de papeleta por defecto: 00001');
+                return '00001'; // En caso de error, usar 00001
+            }
+        }
+
         function parseQueryParams() {
             const params = new URLSearchParams(window.location.search);
             
-            // Función para formatear la fecha en español
-            function formatearFecha(fecha) {
-                const meses = [
-                    'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
-                    'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
-                ];
-                const dia = fecha.getDate();
-                const mes = meses[fecha.getMonth()];
-                const anio = fecha.getFullYear();
-                return `${dia} de ${mes} de ${anio}`;
-            }
+            // Obtener fecha actual
+            const fechaActual = obtenerFechaHoraActual();
+            
+            // Obtener y procesar monto
+            const montoParam = params.get('monto');
+            let montoNumero = montoParam ? parseFloat(montoParam) : 500.00;
+            if (isNaN(montoNumero)) montoNumero = 500.00;
+            montoNumero = parseFloat(montoNumero.toFixed(2)); // Asegurar 2 decimales
+            
+            const montoDisplay = `USD ${montoNumero.toFixed(2)}`;
+            const montoLetras = montoEnLetras(montoNumero);
+            
+            // Obtener tipo de operación (en mayúsculas tal cual viene)
+            const tipoParam = params.get('tipo') || 'Ahorros - depósitos';
+            const tipoMayusculas = tipoParam.toUpperCase();
+            
+            // Detectar tipo de transacción para el webhook (DEPOSITO o RETIRO)
+            const tipoTransaccion = detectarTipoTransaccion(tipoParam);
             
             const defaults = {
-                numero: '00260',
-                cuenta: '1234567890',
-                fecha: formatearFecha(new Date()),
-                socio: 'María Quispe Huamán',
-                documento: 'DNI 43765432',
-                tipo: 'Depósito',
-                monto: 'USD 500.00',
-                concepto: 'Quinientos dólares con 00/100',
-                responsable: 'Carlos Gutiérrez'
+                numero: null, // Se obtendrá del webhook
+                cuenta: params.get('cuenta') ? params.get('cuenta').trim() : '1234567890',
+                fecha: fechaActual.pantalla,
+                fechaWebhook: fechaActual.webhook,
+                socio: params.get('socio') ? params.get('socio').trim() : 'María Quispe Huamán',
+                documento: params.get('documento') ? params.get('documento').trim() : 'DNI 43765432',
+                tipo: tipoMayusculas,
+                tipoTransaccion: tipoTransaccion, // Para el webhook
+                monto: montoDisplay,
+                montoNumero: montoNumero, // Para enviar al webhook
+                concepto: montoLetras,
+                responsable: params.get('responsable') ? params.get('responsable').trim() : 'Carlos Gutiérrez'
             };
 
-            return Object.fromEntries(
-                Object.keys(defaults).map(key => [
-                    key,
-                    params.get(key) ? params.get(key).trim() : defaults[key]
-                ])
-            );
+            return defaults;
         }
 
         function applyTicketData(data) {
+            // Actualizar vista de impresión
             document
                 .querySelectorAll('[data-field]')
                 .forEach(el => {
@@ -262,14 +749,145 @@
                         el.textContent = data[field] || '';
                     }
                 });
+            
+            // Determinar tipo de operación
+            const tipoTransaccion = data['tipoTransaccion'] || 'DEPOSITO';
+            const esDeposito = tipoTransaccion === 'DEPOSITO';
+            const esRetiro = tipoTransaccion === 'RETIRO';
+            
+            // Actualizar vista de pantalla
+            document.getElementById('screen-numero').textContent = data['numero'] || '';
+            document.getElementById('screen-cuenta').textContent = data['cuenta'] || '';
+            document.getElementById('screen-fecha').textContent = data['fecha'] || '';
+            document.getElementById('screen-socio').textContent = data['socio'] || '';
+            document.getElementById('screen-documento').textContent = data['documento'] || '';
+            document.getElementById('screen-monto').textContent = data['monto'] || '';
+            document.getElementById('screen-concepto').textContent = data['concepto'] || '';
+            document.getElementById('screen-responsable').textContent = data['responsable'] || '';
+            
+            // Tipo de operación con cápsula
+            const tipoElement = document.getElementById('screen-tipo');
+            const badgeClass = esDeposito ? 'badge-deposito' : (esRetiro ? 'badge-retiro' : '');
+            tipoElement.innerHTML = `<span class="badge-operation ${badgeClass}">${data['tipo'] || ''}</span>`;
+            
+            // Actualizar botón según tipo de operación
+            const printBtn = document.getElementById('print-btn');
+            if (esDeposito) {
+                printBtn.textContent = 'Confirmar Depósito e Imprimir';
+                printBtn.className = 'print-button deposito';
+            } else if (esRetiro) {
+                printBtn.textContent = 'Confirmar Retiro e Imprimir';
+                printBtn.className = 'print-button retiro';
+            } else {
+                printBtn.textContent = 'Confirmar e Imprimir';
+                printBtn.className = 'print-button';
+            }
+        }
+
+        // Variables globales para el modal
+        let currentTicketData = {};
+
+        function mostrarConfirmacion() {
+            const tipoTransaccion = currentTicketData['tipoTransaccion'] || 'DEPOSITO';
+            const esDeposito = tipoTransaccion === 'DEPOSITO';
+            const esRetiro = tipoTransaccion === 'RETIRO';
+            
+            const modal = document.getElementById('modal-overlay');
+            const modalContent = document.getElementById('modal-content');
+            const modalTitle = document.getElementById('modal-title');
+            const modalMessage = document.getElementById('modal-message');
+            const modalConfirm = document.getElementById('modal-confirm');
+            
+            // Configurar el modal según el tipo de operación
+            if (esDeposito) {
+                modalContent.className = 'modal-content deposito';
+                modalTitle.textContent = 'Confirmar Depósito';
+                modalConfirm.className = 'modal-button confirm';
+                modalMessage.innerHTML = `¿Está seguro de depositar <strong>${currentTicketData['monto']}</strong> a favor de <strong>${currentTicketData['socio']}</strong>?`;
+            } else if (esRetiro) {
+                modalContent.className = 'modal-content retiro';
+                modalTitle.textContent = 'Confirmar Retiro';
+                modalConfirm.className = 'modal-button confirm retiro';
+                modalMessage.innerHTML = `¿Está seguro de retirar <strong>${currentTicketData['monto']}</strong> a favor de <strong>${currentTicketData['socio']}</strong>?`;
+            } else {
+                modalContent.className = 'modal-content';
+                modalTitle.textContent = 'Confirmar Operación';
+                modalConfirm.className = 'modal-button confirm';
+                modalMessage.innerHTML = `¿Está seguro de realizar esta operación por <strong>${currentTicketData['monto']}</strong> para <strong>${currentTicketData['socio']}</strong>?`;
+            }
+            
+            modal.classList.add('show');
+        }
+
+        function cerrarModal() {
+            const modal = document.getElementById('modal-overlay');
+            modal.classList.remove('show');
+        }
+
+        async function confirmarImpresion() {
+            cerrarModal();
+            
+            // Preparar datos para el webhook
+            const datosWebhook = {
+                numero: currentTicketData.numero,
+                cuenta: currentTicketData.cuenta,
+                fecha: currentTicketData.fechaWebhook, // Fecha en formato ISO Ecuador
+                socio: currentTicketData.socio,
+                documento: currentTicketData.documento,
+                tipo: currentTicketData.tipo,
+                tipoTransaccion: currentTicketData.tipoTransaccion, // DEPOSITO o RETIRO
+                monto: currentTicketData.montoNumero, // Solo el número con 2 decimales
+                concepto: currentTicketData.concepto,
+                responsable: currentTicketData.responsable
+            };
+            
+            // Enviar datos al webhook
+            try {
+                console.log('Enviando datos al webhook...');
+                console.log('Datos:', datosWebhook);
+                
+                const response = await fetch('https://lpwebhook.luispinta.com/webhook/7322a9d8-32bc-48bb-8b8c-d5da1878c0fa', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(datosWebhook)
+                });
+                
+                console.log('Respuesta del webhook:', response.status);
+                
+                if (response.ok) {
+                    console.log('Datos enviados exitosamente');
+                } else {
+                    console.warn('Error al enviar datos:', response.status);
+                }
+            } catch (error) {
+                console.error('Error al enviar datos al webhook:', error);
+            }
+            
+            // Imprimir
+            window.print();
         }
 
         // Coordinates query parameters with the template.
-        const ticketData = parseQueryParams();
-        if (ticketData.tipo) {
-            ticketData.tipo = ticketData.tipo.charAt(0).toUpperCase() + ticketData.tipo.slice(1).toLowerCase();
+        async function inicializarPapeleta() {
+            const ticketData = parseQueryParams();
+            
+            // Obtener el número de papeleta del webhook si no viene por parámetro
+            if (!ticketData.numero) {
+                ticketData.numero = await obtenerNumeroPapeleta();
+            }
+            
+            currentTicketData = ticketData; // Guardar en variable global
+            applyTicketData(ticketData);
+            
+            // Ocultar loader y mostrar vista
+            document.getElementById('loader').classList.add('hidden');
+            document.querySelector('.screen-view').classList.add('loaded');
         }
-        applyTicketData(ticketData);
+        
+        // Inicializar la papeleta
+        inicializarPapeleta();
     </script>
 </body>
 </html>
