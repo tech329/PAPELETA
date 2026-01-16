@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Papeleta Caja de Ahorro Tupak Rantina</title>
     <style>
         :root {
@@ -100,6 +101,7 @@
 
         .data-value {
             color: #333;
+            text-align: right;
         }
 
         .badge-operation {
@@ -153,6 +155,46 @@
 
         .print-button:active {
             transform: scale(0.98);
+        }
+
+        /* Panel de Regularización (Oculto) */
+        .regularization-panel {
+            display: none; /* Oculto por defecto */
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff3cd;
+            border: 1px dashed #856404;
+            border-radius: 8px;
+        }
+
+        .regularization-panel h3 {
+            margin-top: 0;
+            color: #856404;
+            font-size: 14pt;
+            margin-bottom: 10px;
+        }
+
+        .reg-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .reg-input {
+            flex: 1;
+            padding: 8px;
+            font-size: 12pt;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .reg-btn {
+            padding: 8px 15px;
+            background: #856404;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
         }
 
         /* Modal de confirmación */
@@ -429,6 +471,17 @@
                 <span class="data-value" id="screen-responsable"></span>
             </div>
         </div>
+
+        <!-- Panel de Regularización -->
+        <div id="regularization-panel" class="regularization-panel">
+            <h3>⚠️ MODO REGULARIZACIÓN</h3>
+            <p style="margin: 0 0 10px 0; font-size: 0.9em;">Modificar fecha y hora de la operación:</p>
+            <div class="reg-controls">
+                <input type="datetime-local" id="manual-date-input" class="reg-input">
+                <button onclick="aplicarRegularizacion()" class="reg-btn">Aplicar Nueva Fecha</button>
+            </div>
+        </div>
+
         <button class="print-button" id="print-btn" onclick="mostrarConfirmacion()">Imprimir Papeleta</button>
     </div>
 
@@ -586,45 +639,265 @@
             return 'DEPOSITO';
         }
 
-        // Función para obtener fecha/hora actual
-        function obtenerFechaHoraActual() {
-            const ahora = new Date();
-            
+        // --- LÓGICA DE REGULARIZACIÓN Y FORMATEO DE FECHA ---
+
+        // Función reutilizable para formatear cualquier objeto Date
+        function formatearFechaObj(fechaObj) {
             // Formato para pantalla: "7 de noviembre del 2025 17:45:36"
             const meses = [
                 'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
                 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
             ];
-            const dia = ahora.getDate();
-            const mes = meses[ahora.getMonth()];
-            const anio = ahora.getFullYear();
-            const horas = ahora.getHours().toString().padStart(2, '0');
-            const minutos = ahora.getMinutes().toString().padStart(2, '0');
-            const segundos = ahora.getSeconds().toString().padStart(2, '0');
+            const dia = fechaObj.getDate();
+            const mes = meses[fechaObj.getMonth()];
+            const anio = fechaObj.getFullYear();
+            const horas = fechaObj.getHours().toString().padStart(2, '0');
+            const minutos = fechaObj.getMinutes().toString().padStart(2, '0');
+            const segundos = fechaObj.getSeconds().toString().padStart(2, '0');
             
             const fechaPantalla = `${dia} de ${mes} del ${anio} ${horas}:${minutos}:${segundos}`;
             
             // Formato ISO para webhook (zona horaria Ecuador UTC-5)
-            const offsetEcuador = -5 * 60; // -5 horas en minutos
-            const offsetActual = ahora.getTimezoneOffset();
-            const diferenciaMinutos = offsetEcuador - offsetActual;
-            const fechaEcuador = new Date(ahora.getTime() + diferenciaMinutos * 60000);
+            // Calculamos el offset manual para asegurar UTC-5 independientemente de la zona horaria del PC
+            // Nota: Si es una fecha manual, asumimos que el usuario ingresó la hora local de Ecuador.
             
-            // Formato ISO sin la Z (timezone local)
-            const year = fechaEcuador.getFullYear();
-            const month = (fechaEcuador.getMonth() + 1).toString().padStart(2, '0');
-            const day = fechaEcuador.getDate().toString().padStart(2, '0');
-            const hours = fechaEcuador.getHours().toString().padStart(2, '0');
-            const mins = fechaEcuador.getMinutes().toString().padStart(2, '0');
-            const secs = fechaEcuador.getSeconds().toString().padStart(2, '0');
+            // Crear una copia para manipular para el webhook
+            const fechaEcuador = new Date(fechaObj); 
             
-            const fechaWebhook = `${year}-${month}-${day}T${hours}:${mins}:${secs}-05:00`;
+            // Si estuviéramos detectando zona horaria real del sistema vs Ecuador:
+            // const offsetEcuador = -5 * 60; 
+            // const offsetActual = fechaObj.getTimezoneOffset();
+            // ... logica compleja ...
+            
+            // SIMPLIFICACIÓN ROBUSTA:
+            // Asumimos que el input o la hora del sistema YA ES la hora que queremos reportar.
+            // Simplemente formateamos los componentes a ISO con -05:00 pegado al final.
+            
+            const year = fechaObj.getFullYear();
+            const month = (fechaObj.getMonth() + 1).toString().padStart(2, '0');
+            const day = fechaObj.getDate().toString().padStart(2, '0');
+            const hoursIso = fechaObj.getHours().toString().padStart(2, '0');
+            const minsIso = fechaObj.getMinutes().toString().padStart(2, '0');
+            const secsIso = fechaObj.getSeconds().toString().padStart(2, '0');
+            
+            const fechaWebhook = `${year}-${month}-${day}T${hoursIso}:${minsIso}:${secsIso}-05:00`;
             
             return {
                 pantalla: fechaPantalla,
                 webhook: fechaWebhook
             };
         }
+
+        // Función original wrapper (para no romper código existente)
+        function obtenerFechaHoraActual() {
+            return formatearFechaObj(new Date());
+        }
+
+        // Lógica de detección de teclas (Tab x3 en 5s)
+        let tabCount = 0;
+        let tabTimer = null;
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Tab') {
+                tabCount++;
+                
+                // Iniciar temporizador en la primera pulsación
+                if (tabCount === 1) {
+                    tabTimer = setTimeout(() => {
+                        tabCount = 0; // Resetear si pasan 5 segundos
+                    }, 5000);
+                }
+
+                // Si llega a 3 pulsaciones
+                if (tabCount === 3) {
+                    clearTimeout(tabTimer);
+                    tabCount = 0;
+                    toggleModoRegularizacion();
+                }
+            }
+        });
+
+        function toggleModoRegularizacion() {
+            const panel = document.getElementById('regularization-panel');
+            const isHidden = panel.style.display === 'none' || panel.style.display === '';
+
+            if (isHidden) {
+                // MOSTRAR EL PANEL
+                panel.style.display = 'block';
+                
+                // Pre-llenar el input con la fecha actual
+                const now = new Date();
+                now.setMinutes(now.getMinutes() - now.getTimezoneOffset()); 
+                document.getElementById('manual-date-input').value = now.toISOString().slice(0, 16);
+                
+                // Dar foco al input automáticamente
+                document.getElementById('manual-date-input').focus();
+                
+                // Mensaje de activación con Modal del Sistema (Estético)
+                mostrarAlerta('Modo Regularización', 'Se ha <strong>ACTIVADO</strong> el modo de regularización.<br>Ahora puede modificar la fecha manualmente.');
+            } else {
+                // OCULTAR EL PANEL
+                panel.style.display = 'none';
+            }
+        }
+
+        function aplicarRegularizacion() {
+            const inputVal = document.getElementById('manual-date-input').value;
+            if (!inputVal) return;
+
+            // Crear fecha desde el input
+            const nuevaFechaObj = new Date(inputVal);
+            
+            // Formatear
+            const fechasFormateadas = formatearFechaObj(nuevaFechaObj);
+            
+            // Actualizar variables globales
+            currentTicketData.fecha = fechasFormateadas.pantalla;
+            currentTicketData.fechaWebhook = fechasFormateadas.webhook;
+            
+            // Actualizar UI Pantalla
+            document.getElementById('screen-fecha').textContent = fechasFormateadas.pantalla;
+            
+            // Actualizar UI Ticket Oculto
+            const fieldTicket = document.querySelector('.ticket__value[data-field="fecha"]');
+            if (fieldTicket) fieldTicket.textContent = fechasFormateadas.pantalla;
+            
+            // Feedback visual en el panel
+            const panel = document.getElementById('regularization-panel');
+            panel.style.backgroundColor = '#d4edda';
+            panel.style.borderColor = '#155724';
+            setTimeout(() => {
+                panel.style.backgroundColor = '#fff3cd';
+                panel.style.borderColor = '#856404';
+            }, 500);
+            
+            // Notificar éxito con modal
+            mostrarAlerta('Fecha Actualizada', 'La fecha de la papeleta ha sido modificada correctamente.');
+        }
+
+        // --- SISTEMA DE MODALES ---
+
+        // Función para mostrar alertas simples reutilizando el modal
+        function mostrarAlerta(titulo, mensaje) {
+            const modal = document.getElementById('modal-overlay');
+            const modalContent = document.getElementById('modal-content');
+            const modalTitle = document.getElementById('modal-title');
+            const modalMessage = document.getElementById('modal-message');
+            const modalConfirm = document.getElementById('modal-confirm');
+            const modalCancel = document.querySelector('.modal-button.cancel');
+
+            // Resetear estilo base
+            modalContent.className = 'modal-content'; 
+            
+            // Configurar contenido
+            modalTitle.textContent = titulo;
+            modalMessage.innerHTML = mensaje;
+            
+            // Configurar botones para modo "Alerta" (ocultar cancelar)
+            modalCancel.style.display = 'none';
+            
+            // Botón de aceptar
+            modalConfirm.textContent = 'ACEPTAR';
+            modalConfirm.className = 'modal-button confirm';
+            
+            // Sobrescribir comportamiento temporalmente para solo cerrar
+            modalConfirm.onclick = cerrarModal;
+
+            modal.classList.add('show');
+        }
+
+        // Variables globales para el modal
+        let currentTicketData = {};
+
+        function mostrarConfirmacion() {
+            const tipoTransaccion = currentTicketData['tipoTransaccion'] || 'DEPOSITO';
+            const esDeposito = tipoTransaccion === 'DEPOSITO';
+            const esRetiro = tipoTransaccion === 'RETIRO';
+            
+            const modal = document.getElementById('modal-overlay');
+            const modalContent = document.getElementById('modal-content');
+            const modalTitle = document.getElementById('modal-title');
+            const modalMessage = document.getElementById('modal-message');
+            const modalConfirm = document.getElementById('modal-confirm');
+            const modalCancel = document.querySelector('.modal-button.cancel');
+
+            // IMPORTANTE: Restaurar estado de botones (por si se usó mostrarAlerta antes)
+            modalCancel.style.display = ''; // Restaurar visibilidad (flex/block por CSS)
+            modalConfirm.onclick = confirmarImpresion; // Restaurar función original
+            
+            // Configurar el modal según el tipo de operación
+            if (esDeposito) {
+                modalContent.className = 'modal-content deposito';
+                modalTitle.textContent = 'Confirmar Depósito';
+                modalConfirm.textContent = 'CONFIRMAR';
+                modalConfirm.className = 'modal-button confirm';
+                modalMessage.innerHTML = `¿Está seguro de depositar <strong>${currentTicketData['monto']}</strong> a favor de <strong>${currentTicketData['socio']}</strong>?`;
+            } else if (esRetiro) {
+                modalContent.className = 'modal-content retiro';
+                modalTitle.textContent = 'Confirmar Retiro';
+                modalConfirm.textContent = 'CONFIRMAR';
+                modalConfirm.className = 'modal-button confirm retiro';
+                modalMessage.innerHTML = `¿Está seguro de retirar <strong>${currentTicketData['monto']}</strong> a favor de <strong>${currentTicketData['socio']}</strong>?`;
+            } else {
+                modalContent.className = 'modal-content';
+                modalTitle.textContent = 'Confirmar Operación';
+                modalConfirm.textContent = 'CONFIRMAR';
+                modalConfirm.className = 'modal-button confirm';
+                modalMessage.innerHTML = `¿Está seguro de realizar esta operación por <strong>${currentTicketData['monto']}</strong> para <strong>${currentTicketData['socio']}</strong>?`;
+            }
+            
+            modal.classList.add('show');
+        }
+
+        function cerrarModal() {
+            const modal = document.getElementById('modal-overlay');
+            modal.classList.remove('show');
+        }
+
+        async function confirmarImpresion() {
+            cerrarModal();
+            
+            // Preparar datos para el webhook
+            const datosWebhook = {
+                numero: currentTicketData.numero,
+                cuenta: currentTicketData.cuenta,
+                fecha: currentTicketData.fechaWebhook, // Fecha en formato ISO Ecuador
+                socio: currentTicketData.socio,
+                documento: currentTicketData.documento,
+                tipo: currentTicketData.tipo,
+                tipoTransaccion: currentTicketData.tipoTransaccion, // DEPOSITO o RETIRO
+                monto: currentTicketData.montoNumero, // Solo el número con 2 decimales
+                concepto: currentTicketData.concepto,
+                responsable: currentTicketData.responsable
+            };
+            
+            // Enviar datos al webhook
+            try {
+                console.log('Enviando datos al webhook...');
+                console.log('Datos:', datosWebhook);
+                
+                const response = await fetch('https://lpwebhook.luispinta.com/webhook/7322a9d8-32bc-48bb-8b8c-d5da1878c0fa', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(datosWebhook)
+                });
+                
+                if (response.ok) {
+                    console.log('Datos enviados exitosamente');
+                } else {
+                    console.warn('Error al enviar datos:', response.status);
+                }
+            } catch (error) {
+                console.error('Error al enviar datos al webhook:', error);
+            }
+            
+            // Imprimir
+            window.print();
+        }
+
+        // --- FUNCIONES RESTAURADAS ---
 
         // Función para obtener el siguiente número de papeleta
         async function obtenerNumeroPapeleta() {
@@ -640,8 +913,6 @@
                 });
                 
                 console.log('Respuesta recibida:', response);
-                console.log('Status:', response.status);
-                console.log('Status Text:', response.statusText);
                 
                 if (!response.ok) {
                     console.warn('Respuesta no exitosa del webhook:', response.status);
@@ -649,29 +920,18 @@
                 }
                 
                 const data = await response.json();
-                console.log('Datos parseados:', data);
-                console.log('Tipo de datos:', typeof data);
-                console.log('Es array?', Array.isArray(data));
                 
                 if (data && data[0] && data[0].papeletas && data[0].papeletas.length > 0) {
                     const papeletas = data[0].papeletas;
-                    console.log('Papeletas encontradas:', papeletas);
                     const ultimaPapeleta = Math.max(...papeletas);
                     const siguientePapeleta = ultimaPapeleta + 1;
-                    console.log('Última papeleta:', ultimaPapeleta, '- Siguiente:', siguientePapeleta);
                     return siguientePapeleta.toString().padStart(5, '0');
                 }
                 
-                console.warn('No se encontraron papeletas en la respuesta');
-                console.log('Estructura de datos recibida no coincide con lo esperado');
-                return '00001'; // Si no hay papeletas, empezar con 00001
+                return '00001'; 
             } catch (error) {
                 console.error('Error al obtener número de papeleta:', error);
-                console.error('Tipo de error:', error.name);
-                console.error('Mensaje:', error.message);
-                console.warn('IMPORTANTE: Verifica que CORS esté habilitado en el webhook de n8n');
-                console.warn('Usando número de papeleta por defecto: 00001');
-                return '00001'; // En caso de error, usar 00001
+                return '00001'; 
             }
         }
 
@@ -782,91 +1042,6 @@
                 printBtn.textContent = 'Confirmar e Imprimir';
                 printBtn.className = 'print-button';
             }
-        }
-
-        // Variables globales para el modal
-        let currentTicketData = {};
-
-        function mostrarConfirmacion() {
-            const tipoTransaccion = currentTicketData['tipoTransaccion'] || 'DEPOSITO';
-            const esDeposito = tipoTransaccion === 'DEPOSITO';
-            const esRetiro = tipoTransaccion === 'RETIRO';
-            
-            const modal = document.getElementById('modal-overlay');
-            const modalContent = document.getElementById('modal-content');
-            const modalTitle = document.getElementById('modal-title');
-            const modalMessage = document.getElementById('modal-message');
-            const modalConfirm = document.getElementById('modal-confirm');
-            
-            // Configurar el modal según el tipo de operación
-            if (esDeposito) {
-                modalContent.className = 'modal-content deposito';
-                modalTitle.textContent = 'Confirmar Depósito';
-                modalConfirm.className = 'modal-button confirm';
-                modalMessage.innerHTML = `¿Está seguro de depositar <strong>${currentTicketData['monto']}</strong> a favor de <strong>${currentTicketData['socio']}</strong>?`;
-            } else if (esRetiro) {
-                modalContent.className = 'modal-content retiro';
-                modalTitle.textContent = 'Confirmar Retiro';
-                modalConfirm.className = 'modal-button confirm retiro';
-                modalMessage.innerHTML = `¿Está seguro de retirar <strong>${currentTicketData['monto']}</strong> a favor de <strong>${currentTicketData['socio']}</strong>?`;
-            } else {
-                modalContent.className = 'modal-content';
-                modalTitle.textContent = 'Confirmar Operación';
-                modalConfirm.className = 'modal-button confirm';
-                modalMessage.innerHTML = `¿Está seguro de realizar esta operación por <strong>${currentTicketData['monto']}</strong> para <strong>${currentTicketData['socio']}</strong>?`;
-            }
-            
-            modal.classList.add('show');
-        }
-
-        function cerrarModal() {
-            const modal = document.getElementById('modal-overlay');
-            modal.classList.remove('show');
-        }
-
-        async function confirmarImpresion() {
-            cerrarModal();
-            
-            // Preparar datos para el webhook
-            const datosWebhook = {
-                numero: currentTicketData.numero,
-                cuenta: currentTicketData.cuenta,
-                fecha: currentTicketData.fechaWebhook, // Fecha en formato ISO Ecuador
-                socio: currentTicketData.socio,
-                documento: currentTicketData.documento,
-                tipo: currentTicketData.tipo,
-                tipoTransaccion: currentTicketData.tipoTransaccion, // DEPOSITO o RETIRO
-                monto: currentTicketData.montoNumero, // Solo el número con 2 decimales
-                concepto: currentTicketData.concepto,
-                responsable: currentTicketData.responsable
-            };
-            
-            // Enviar datos al webhook
-            try {
-                console.log('Enviando datos al webhook...');
-                console.log('Datos:', datosWebhook);
-                
-                const response = await fetch('https://lpwebhook.luispinta.com/webhook/7322a9d8-32bc-48bb-8b8c-d5da1878c0fa', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(datosWebhook)
-                });
-                
-                console.log('Respuesta del webhook:', response.status);
-                
-                if (response.ok) {
-                    console.log('Datos enviados exitosamente');
-                } else {
-                    console.warn('Error al enviar datos:', response.status);
-                }
-            } catch (error) {
-                console.error('Error al enviar datos al webhook:', error);
-            }
-            
-            // Imprimir
-            window.print();
         }
 
         // Coordinates query parameters with the template.
