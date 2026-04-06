@@ -487,7 +487,7 @@
             left: 80mm;
             width: 200mm;
             height: 80mm;
-            padding: 3mm 6mm; /* Reducido un poco para ganar espacio interno */
+            padding: 5mm 6mm 3mm 6mm; /* Aumentado padding superior para evitar cortes */
             box-sizing: border-box;
             background: #ffffff;
             display: flex;
@@ -502,34 +502,36 @@
         .ticket__header {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start; /* Alineado arriba para controlar margen del badge */
+            align-items: flex-start;
             margin-bottom: 1mm;
         }
 
         .ticket__header h1 {
             margin: 0;
-            font-size: 13pt; /* Incrementado de 11pt */
+            font-size: 14pt; /* Aumentado ligeramente */
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            line-height: 1.2;
+            line-height: 1; /* Reducido line-height para ahorrar espacio arriba */
+            padding-top: 0;
         }
 
         .ticket__section {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 0.2mm 4mm; /* Espacio vertical mínimo, horizontal amplio */
-            font-size: 11pt; /* Incrementado de 10pt */
+            gap: 0.2mm 4mm;
+            font-size: 11pt;
             flex-grow: 1;
+            margin-top: 2mm;
         }
 
         .ticket__item {
             display: flex;
             flex-direction: column;
-            gap: 0.1mm; /* Espacio mínimo entre etiqueta y valor */
+            gap: 0.1mm;
         }
 
         .ticket__label {
-            font-size: 8.5pt; /* Incrementado de 7pt */
+            font-size: 8.5pt;
             text-transform: uppercase;
             color: #000000;
             line-height: 1;
@@ -538,7 +540,7 @@
         }
 
         .ticket__value {
-            font-size: 11pt; /* Incrementado de 9pt */
+            font-size: 11pt;
             font-weight: 700;
             line-height: 1.1;
             color: #000000;
@@ -548,7 +550,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 8.5pt; /* Incrementado de 7pt */
+            font-size: 8.5pt;
             text-transform: uppercase;
             color: #000000;
             padding-top: 1mm;
@@ -566,7 +568,7 @@
         }
 
         .ticket__tercero-header {
-            font-size: 7.5pt; /* Un poco más grande */
+            font-size: 7.5pt;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 0.2px;
@@ -586,19 +588,20 @@
             display: inline-flex;
             align-items: center;
             background: #fff;
-            border: 1pt solid #000000;
-            border-radius: 5px;
-            padding: 4px 12px; /* Más padding para que se vea más grande */
-            font-size: 11pt; /* Incrementado de 9pt */
-            line-height: 1.2;
-            margin-top: 5mm; /* ALINEACIÓN MÁS ABAJO solicitada */
-            box-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+            border: 1.2pt solid #000000; /* Borde más grueso */
+            border-radius: 6px;
+            padding: 6px 16px; /* Más grande */
+            font-size: 13pt; /* Aumentado a 13pt */
+            line-height: 1;
+            margin-top: 10mm; /* MÁS ABAJO solicitado */
+            box-shadow: 3px 3px 0px rgba(0,0,0,0.1);
+            white-space: nowrap;
         }
 
         .ruc-badge .label {
             color: #000000;
             font-weight: normal;
-            margin-right: 6px;
+            margin-right: 8px;
         }
 
         .ruc-badge .number {
@@ -608,7 +611,7 @@
 
         .ruc-badge .number .normal {
             font-weight: normal;
-            opacity: 0.6;
+            opacity: 0.5;
         }
 
         @page {
