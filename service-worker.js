@@ -1,7 +1,7 @@
 // Service Worker v2.1.0
 // Network first strategy for better performance with offline support
 
-const CACHE_NAME = 'papeleta-cache-v2.1.0';
+const CACHE_NAME = 'papeleta-cache-v2.1.5';
 const URLS_TO_CACHE = [
     '/',
     '/index.html',
@@ -12,7 +12,7 @@ const URLS_TO_CACHE = [
 self.addEventListener('install', event => {
     event.waitUntil(
         caches.open(CACHE_NAME).then(cache => {
-            console.log('[Service Worker] Caching assets for v2.1.0');
+            console.log('[Service Worker] Caching assets for v2.1.5');
             return cache.addAll(URLS_TO_CACHE).catch(err => {
                 console.log('[Service Worker] Partial cache - some assets unavailable offline');
             });
