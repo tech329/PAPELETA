@@ -468,7 +468,7 @@
             left: 80mm;
             width: 200mm;
             height: 80mm;
-            padding: 7mm 6mm 3mm 6mm; /* REDUCIDO DE 12mm A 7mm PARA SUBIR EL CONTENIDO */
+            padding: 4mm 6mm 3mm 6mm; /* REDUCIDO DE 7mm A 4mm PARA SUBIR TODO EL CONTENIDO */
             box-sizing: border-box;
             background: #ffffff;
             display: flex;
@@ -483,7 +483,7 @@
         .ticket__header {
             display: flex;
             justify-content: space-between;
-            align-items: center; /* ALINEACIÓN HORIZONTAL TÍTULO Y CÁPSULA */
+            align-items: center;
             margin-bottom: 2mm;
         }
 
@@ -534,8 +534,18 @@
             font-size: 8.5pt;
             text-transform: uppercase;
             color: #000000;
-            padding-top: 1mm;
+            padding-top: 1.5mm;
             border-top: 0.5pt solid #eee;
+        }
+
+        /* Línea de firma sólida */
+        .signature-line {
+            display: inline-block;
+            width: 45mm;
+            border-bottom: 1pt solid #000000; /* LÍNEA SÓLIDA NEGRA */
+            margin-left: 5px;
+            vertical-align: baseline;
+            height: 0;
         }
 
         .ticket__tercero {
@@ -683,7 +693,7 @@
         <div class="brand-footer">
             <span class="brand-text">POWERED BY</span>
             <img src="/img/lpsolutionsblack.webp" alt="LP Solutions Logo" class="brand-logo">
-            <div class="app-version">v2.1.0</div>
+            <div class="app-version">v2.1.5</div>
         </div>
     </div>
 
@@ -760,7 +770,7 @@
                 </div>
 
                 <div class="ticket__footer" id="ticket-footer">
-                    <div>Firma de <span data-field="socio-firma"></span> ____________________</div>
+                    <div>Firma de <span data-field="socio-firma"></span> <span class="signature-line"></span></div>
                 </div>
             </div>
         </div>
@@ -954,7 +964,7 @@
                 const vStat = document.getElementById('tercero-verification-status');
                 vStat.className = 'tercero-status ' + (terceroData.encontrado ? 'verificado' : 'manual');
                 vStat.innerHTML = terceroData.encontrado ? '<i class="fas fa-check-circle"></i> Verificado' : '<i class="fas fa-edit"></i> Manual';
-                document.getElementById('ticket-footer').innerHTML = '<div>Firma del Depositante: ____________________</div>';
+                document.getElementById('ticket-footer').innerHTML = '<div>Firma del Depositante: <span class="signature-line"></span></div>';
             }
         }
 
@@ -995,7 +1005,8 @@
             if (!terceroData.encontrado) {
                 document.getElementById('screen-nombre-tercero').addEventListener('input', e => {
                     terceroData.nombre = e.target.value.toUpperCase();
-                    document.querySelector('.ticket [data-field="nombre-tercero"]').textContent = terceroData.nombre;
+                    const nEl = document.querySelector('.ticket [data-field="nombre-tercero"]');
+                    if (nEl) nEl.textContent = terceroData.nombre;
                 });
             }
         }
