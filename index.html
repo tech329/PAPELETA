@@ -292,10 +292,6 @@
             background: #c82333;
         }
 
-        .print-button:active {
-            transform: scale(0.98);
-        }
-
         /* Panel de Regularización */
         .regularization-panel {
             display: none;
@@ -363,16 +359,6 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
-        .modal-content.deposito {
-            border: 3px solid #28a745;
-            background: #f0f9f4;
-        }
-
-        .modal-content.retiro {
-            border: 3px solid #dc3545;
-            background: #fdf4f5;
-        }
-
         .modal-title {
             font-size: 18pt;
             font-weight: bold;
@@ -412,10 +398,6 @@
             background: #dc3545;
         }
 
-        .modal-button.confirm:hover {
-            opacity: 0.9;
-        }
-
         .modal-button.cancel {
             background: #6c757d;
             color: #fff;
@@ -444,7 +426,6 @@
         .brand-logo {
             height: 25px;
             width: auto;
-            filter: grayscale(100%);
         }
 
         .app-version {
@@ -487,7 +468,7 @@
             left: 80mm;
             width: 200mm;
             height: 80mm;
-            padding: 5mm 6mm 3mm 6mm; /* Aumentado padding superior para evitar cortes */
+            padding: 12mm 6mm 3mm 6mm; /* INCREMENTADO EL PADDING SUPERIOR PARA BAJAR AMBOS ELEMENTOS */
             box-sizing: border-box;
             background: #ffffff;
             display: flex;
@@ -502,17 +483,17 @@
         .ticket__header {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1mm;
+            align-items: center; /* MISMA ALTURA PARA TÍTULO Y CÁPSULA */
+            margin-bottom: 2mm;
         }
 
         .ticket__header h1 {
             margin: 0;
-            font-size: 14pt; /* Aumentado ligeramente */
+            padding: 0; /* PADDING DEL TÍTULO REDUCIDO AL MÍNIMO */
+            font-size: 14pt;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            line-height: 1; /* Reducido line-height para ahorrar espacio arriba */
-            padding-top: 0;
+            line-height: 1; 
         }
 
         .ticket__section {
@@ -521,7 +502,7 @@
             gap: 0.2mm 4mm;
             font-size: 11pt;
             flex-grow: 1;
-            margin-top: 2mm;
+            margin-top: 1mm;
         }
 
         .ticket__item {
@@ -588,13 +569,13 @@
             display: inline-flex;
             align-items: center;
             background: #fff;
-            border: 1.2pt solid #000000; /* Borde más grueso */
+            border: 1.2pt solid #000000;
             border-radius: 6px;
-            padding: 6px 16px; /* Más grande */
-            font-size: 13pt; /* Aumentado a 13pt */
+            padding: 6px 16px; 
+            font-size: 13pt; /* AÚN MÁS GRANDE */
             line-height: 1;
-            margin-top: 10mm; /* MÁS ABAJO solicitado */
-            box-shadow: 3px 3px 0px rgba(0,0,0,0.1);
+            margin-top: 0; /* ELIMINADO MARGEN SUPERIOR PARA ALINEAR CON TÍTULO */
+            box-shadow: 2px 2px 0px rgba(0,0,0,0.1);
             white-space: nowrap;
         }
 
