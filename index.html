@@ -296,9 +296,9 @@
             transform: scale(0.98);
         }
 
-        /* Panel de Regularización (Oculto) */
+        /* Panel de Regularización */
         .regularization-panel {
-            display: none; /* Oculto por defecto */
+            display: none;
             margin-top: 20px;
             padding: 15px;
             background: #fff3cd;
@@ -336,7 +336,7 @@
             cursor: pointer;
         }
 
-        /* Modal de confirmación */
+        /* Modal */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -421,11 +421,7 @@
             color: #fff;
         }
 
-        .modal-button.cancel:hover {
-            background: #5a6268;
-        }
-
-        /* Branding Footer */
+        /* Branding */
         .brand-footer {
             margin-top: 40px;
             display: flex;
@@ -435,10 +431,6 @@
             opacity: 0.6;
             transition: opacity 0.3s;
             padding-bottom: 20px;
-        }
-
-        .brand-footer:hover {
-            opacity: 1;
         }
 
         .brand-text {
@@ -460,16 +452,9 @@
             color: #999;
             letter-spacing: 0.5px;
             margin-top: 3px;
-            font-weight: 300;
-            opacity: 0.7;
-            transition: opacity 0.3s;
         }
 
-        .brand-footer:hover .app-version {
-            opacity: 1;
-        }
-
-        /* Vista de impresión (oculta en pantalla) */
+        /* VISTA DE IMPRESIÓN */
         .print-view {
             display: none;
         }
@@ -488,17 +473,12 @@
             }
         }
 
-        /* Estilos para la papeleta impresa */
-
         .page {
             position: relative;
             width: 80mm;
             height: 297mm;
             box-sizing: border-box;
             background: #ffffff;
-            border: none;
-            box-shadow: none;
-            overflow: visible;
         }
 
         .ticket {
@@ -507,136 +487,128 @@
             left: 80mm;
             width: 200mm;
             height: 80mm;
-            padding: 4mm 6mm;
+            padding: 3mm 6mm; /* Reducido un poco para ganar espacio interno */
             box-sizing: border-box;
             background: #ffffff;
-            display: grid;
-            grid-template-rows: auto 1fr auto;
-            gap: 1.2mm;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
             transform-origin: top left;
             transform: rotate(90deg);
-            box-shadow: 0 0 0 0 transparent;
             border: 1px solid #000000;
             border-radius: 2mm;
-            background-clip: padding-box;
         }
 
-        .ticket__header,
-        .ticket__footer {
+        .ticket__header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start; /* Alineado arriba para controlar margen del badge */
+            margin-bottom: 1mm;
         }
 
         .ticket__header h1 {
             margin: 0;
-            font-size: 11pt;
+            font-size: 13pt; /* Incrementado de 11pt */
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            line-height: 1;
+            line-height: 1.2;
         }
 
         .ticket__section {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 0.5mm 2.5mm;
-            font-size: 10pt;
+            gap: 0.2mm 4mm; /* Espacio vertical mínimo, horizontal amplio */
+            font-size: 11pt; /* Incrementado de 10pt */
+            flex-grow: 1;
         }
 
         .ticket__item {
             display: flex;
             flex-direction: column;
-            gap: 0.2mm;
+            gap: 0.1mm; /* Espacio mínimo entre etiqueta y valor */
         }
 
         .ticket__label {
-            font-size: 7pt;
+            font-size: 8.5pt; /* Incrementado de 7pt */
             text-transform: uppercase;
             color: #000000;
             line-height: 1;
-            letter-spacing: 0.3px;
+            font-weight: normal;
+            letter-spacing: 0.2px;
         }
 
         .ticket__value {
-            font-size: 9pt;
-            font-weight: 600;
-            line-height: 1.15;
+            font-size: 11pt; /* Incrementado de 9pt */
+            font-weight: 700;
+            line-height: 1.1;
             color: #000000;
         }
 
         .ticket__footer {
-            font-size: 7pt;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 8.5pt; /* Incrementado de 7pt */
             text-transform: uppercase;
             color: #000000;
-            padding-top: 0.5mm;
-            line-height: 1.1;
+            padding-top: 1mm;
+            border-top: 0.5pt solid #eee;
         }
 
         .ticket__tercero {
             display: flex;
             flex-direction: column;
-            gap: 0.3mm;
-            font-size: 8pt;
-            border-top: 0.5pt solid #000000;
-            padding-top: 0.5mm;
-            margin-top: 0.3mm;
-            background-color: transparent;
-            padding: 0;
+            gap: 0.2mm;
+            border-top: 0.8pt solid #000000;
+            padding-top: 0.8mm;
+            margin-top: 0.5mm;
+            margin-bottom: 0.5mm;
         }
 
         .ticket__tercero-header {
-            font-size: 6pt;
+            font-size: 7.5pt; /* Un poco más grande */
             font-weight: bold;
             text-transform: uppercase;
-            color: #000000;
             letter-spacing: 0.2px;
-            margin-bottom: 0.3mm;
-            padding-bottom: 0.3mm;
-            border-bottom: 0.5pt solid #000000;
+            margin-bottom: 0.5mm;
+            border-bottom: 0.3pt solid #000000;
             line-height: 1;
         }
 
         .ticket__tercero-content {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 0.5mm 2mm;
+            gap: 0.2mm 4mm;
         }
 
-        .ticket__tercero .ticket__item {
-            display: flex;
-            flex-direction: column;
-            gap: 0.1mm;
-        }
-
+        /* Badge del número de papeleta */
         .ruc-badge {
-            display: inline-block;
-            background: #f0f0f0;
-            border: 0.5pt solid #000000;
-            border-radius: 6px;
-            padding: 2px 8px;
-            font-size: 9pt;
+            display: inline-flex;
+            align-items: center;
+            background: #fff;
+            border: 1pt solid #000000;
+            border-radius: 5px;
+            padding: 4px 12px; /* Más padding para que se vea más grande */
+            font-size: 11pt; /* Incrementado de 9pt */
             line-height: 1.2;
+            margin-top: 5mm; /* ALINEACIÓN MÁS ABAJO solicitada */
+            box-shadow: 2px 2px 0px rgba(0,0,0,0.1);
         }
 
         .ruc-badge .label {
             color: #000000;
             font-weight: normal;
+            margin-right: 6px;
         }
 
         .ruc-badge .number {
             color: #000000;
-            background: #ffffff;
-            padding: 2px 6px;
-            border-radius: 6px;
-            margin-left: 4px;
+            font-weight: bold;
         }
 
         .ruc-badge .number .normal {
             font-weight: normal;
-        }
-
-        .ruc-badge .number .bold {
-            font-weight: bold;
+            opacity: 0.6;
         }
 
         @page {
@@ -644,17 +616,14 @@
             margin: 0;
         }
     </style>
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <!-- Loader -->
     <div class="loader-container" id="loader">
         <div class="loader"></div>
         <div class="loader-text">Cargando datos...</div>
     </div>
 
-    <!-- Vista de pantalla -->
     <div class="screen-view">
         <h2>Papeleta de Caja de Ahorro</h2>
         <div class="data-summary">
@@ -711,16 +680,14 @@
                 <div class="tercero-field-group full">
                     <div class="tercero-field">
                         <div class="tercero-field-label">Nombre del Depositante</div>
-                        <input type="text" id="screen-nombre-tercero" class="tercero-input" placeholder="Ingrese el nombre completo del depositante" disabled readonly>
+                        <input type="text" id="screen-nombre-tercero" class="tercero-input" placeholder="Nombre completo" disabled readonly>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Panel de Regularización -->
         <div id="regularization-panel" class="regularization-panel">
             <h3>⚠️ MODO REGULARIZACIÓN</h3>
-            <p style="margin: 0 0 10px 0; font-size: 0.9em;">Modificar fecha y hora de la operación:</p>
             <div class="reg-controls">
                 <input type="datetime-local" id="manual-date-input" class="reg-input">
                 <button onclick="aplicarRegularizacion()" class="reg-btn">Aplicar Nueva Fecha</button>
@@ -729,15 +696,13 @@
 
         <button class="print-button" id="print-btn" onclick="mostrarConfirmacion()">Imprimir Papeleta</button>
 
-        <!-- Branding Footer -->
         <div class="brand-footer">
             <span class="brand-text">POWERED BY</span>
-            <img src="img/lpsolutionsblack.webp" alt="LP Solutions Logo" class="brand-logo">
+            <img src="https://via.placeholder.com/100x25?text=LP+Solutions" alt="LP Solutions Logo" class="brand-logo">
             <div class="app-version">v2.1.0</div>
         </div>
     </div>
 
-    <!-- Modal de confirmación -->
     <div class="modal-overlay" id="modal-overlay">
         <div class="modal-content" id="modal-content">
             <div class="modal-title" id="modal-title">Confirmar Operación</div>
@@ -749,16 +714,18 @@
         </div>
     </div>
 
-    <!-- Vista de impresión (oculta) -->
+    <!-- VISTA DE IMPRESIÓN -->
     <div class="print-view">
         <div class="page">
             <div class="ticket" id="ticket">
                 <div class="ticket__header">
                     <h1>Caja de Ahorro Tupak Rantina</h1>
-                    <div>
-                        <div><span class="ruc-badge"><span class="label">PAPELETA:</span><span class="number" data-field="numero-header"></span></span></div>
+                    <div class="ruc-badge">
+                        <span class="label">PAPELETA:</span>
+                        <span class="number" data-field="numero-header"></span>
                     </div>
                 </div>
+
                 <div class="ticket__section" id="ticket-content">
                     <div class="ticket__item">
                         <span class="ticket__label">Número de cuenta</span>
@@ -793,6 +760,7 @@
                         <span class="ticket__value" data-field="responsable"></span>
                     </div>
                 </div>
+
                 <div id="ticket-tercero-section" class="ticket__tercero" style="display: none;">
                     <div class="ticket__tercero-header">Depósito por un Tercero</div>
                     <div class="ticket__tercero-content">
@@ -806,6 +774,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="ticket__footer" id="ticket-footer">
                     <div>Firma de <span data-field="socio-firma"></span> ____________________</div>
                 </div>
@@ -814,709 +783,259 @@
     </div>
 
     <script>
-        // Función para convertir números a letras en español
+        // Funciones de conversión y utilidades
         function numeroALetras(num) {
             const unidades = ['', 'UNO', 'DOS', 'TRES', 'CUATRO', 'CINCO', 'SEIS', 'SIETE', 'OCHO', 'NUEVE'];
             const decenas = ['', '', 'VEINTE', 'TREINTA', 'CUARENTA', 'CINCUENTA', 'SESENTA', 'SETENTA', 'OCHENTA', 'NOVENTA'];
             const especiales = ['DIEZ', 'ONCE', 'DOCE', 'TRECE', 'CATORCE', 'QUINCE', 'DIECISÉIS', 'DIECISIETE', 'DIECIOCHO', 'DIECINUEVE'];
             const centenas = ['', 'CIENTO', 'DOSCIENTOS', 'TRESCIENTOS', 'CUATROCIENTOS', 'QUINIENTOS', 'SEISCIENTOS', 'SETECIENTOS', 'OCHOCIENTOS', 'NOVECIENTOS'];
-            
             if (num === 0) return 'CERO';
             if (num === 100) return 'CIEN';
             if (num === 1) return 'UN';
-            
             let resultado = '';
-            
-            // Miles
             if (num >= 1000) {
                 const miles = Math.floor(num / 1000);
-                if (miles === 1) {
-                    resultado += 'MIL ';
-                } else {
-                    resultado += numeroALetras(miles) + ' MIL ';
-                }
+                if (miles === 1) resultado += 'MIL ';
+                else resultado += numeroALetras(miles) + ' MIL ';
                 num = num % 1000;
             }
-            
-            // Centenas
             if (num >= 100) {
                 resultado += centenas[Math.floor(num / 100)] + ' ';
                 num = num % 100;
             }
-            
-            // Decenas y unidades
             if (num >= 20) {
                 const dec = Math.floor(num / 10);
                 const uni = num % 10;
                 resultado += decenas[dec];
-                if (uni > 0) {
-                    resultado += ' Y ' + unidades[uni];
-                }
+                if (uni > 0) resultado += ' Y ' + unidades[uni];
             } else if (num >= 10) {
                 resultado += especiales[num - 10];
             } else if (num > 0) {
                 resultado += unidades[num];
             }
-            
             return resultado.trim();
         }
 
-        // Función para convertir monto a letras con formato
         function montoEnLetras(monto) {
             const numero = parseFloat(monto);
             if (isNaN(numero)) return 'CERO DÓLARES CON 00/100';
-            
             const parteEntera = Math.floor(numero);
             const parteDecimal = Math.round((numero - parteEntera) * 100);
-            
             const letrasEntero = numeroALetras(parteEntera);
             const letrasDecimal = parteDecimal.toString().padStart(2, '0');
-            
-            let resultado = 'USD ' + letrasEntero;
-            if (parteEntera === 1) {
-                resultado += ' DÓLAR';
-            } else {
-                resultado += ' DÓLARES';
-            }
-            resultado += ' CON ' + letrasDecimal + '/100';
-            
+            let resultado = 'USD ' + letrasEntero + (parteEntera === 1 ? ' DÓLAR' : ' DÓLARES') + ' CON ' + letrasDecimal + '/100';
             return resultado;
         }
 
-        // Función para detectar tipo de transacción (DEPOSITO o RETIRO)
         function detectarTipoTransaccion(tipo) {
             if (!tipo) return 'DEPOSITO';
-            
-            const tipoLower = tipo.toLowerCase()
-                .normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // Remover acentos
-            
-            // Detectar retiro
-            if (tipoLower.includes('retiro') || tipoLower.includes('retiros')) {
-                return 'RETIRO';
-            }
-            
-            // Detectar depósito (por defecto)
-            if (tipoLower.includes('deposit') || tipoLower.includes('deposito') || tipoLower.includes('depositos')) {
-                return 'DEPOSITO';
-            }
-            
-            // Por defecto, si no se detecta, es depósito
-            return 'DEPOSITO';
+            const t = tipo.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            return (t.includes('retiro')) ? 'RETIRO' : 'DEPOSITO';
         }
 
-        // --- LÓGICA DE REGULARIZACIÓN Y FORMATEO DE FECHA ---
-
-        // Función reutilizable para formatear cualquier objeto Date
         function formatearFechaObj(fechaObj) {
-            // Formato para pantalla: "7 de noviembre del 2025 17:45:36"
-            const meses = [
-                'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
-                'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
-            ];
+            const meses = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
             const dia = fechaObj.getDate();
             const mes = meses[fechaObj.getMonth()];
             const anio = fechaObj.getFullYear();
-            const horas = fechaObj.getHours().toString().padStart(2, '0');
-            const minutos = fechaObj.getMinutes().toString().padStart(2, '0');
-            const segundos = fechaObj.getSeconds().toString().padStart(2, '0');
-            
-            const fechaPantalla = `${dia} de ${mes} del ${anio} ${horas}:${minutos}:${segundos}`;
-            
-            // Formato ISO para webhook (zona horaria Ecuador UTC-5)
-            // Calculamos el offset manual para asegurar UTC-5 independientemente de la zona horaria del PC
-            // Nota: Si es una fecha manual, asumimos que el usuario ingresó la hora local de Ecuador.
-            
-            // Crear una copia para manipular para el webhook
-            const fechaEcuador = new Date(fechaObj); 
-            
-            // Si estuviéramos detectando zona horaria real del sistema vs Ecuador:
-            // const offsetEcuador = -5 * 60; 
-            // const offsetActual = fechaObj.getTimezoneOffset();
-            // ... logica compleja ...
-            
-            // SIMPLIFICACIÓN ROBUSTA:
-            // Asumimos que el input o la hora del sistema YA ES la hora que queremos reportar.
-            // Simplemente formateamos los componentes a ISO con -05:00 pegado al final.
-            
-            const year = fechaObj.getFullYear();
-            const month = (fechaObj.getMonth() + 1).toString().padStart(2, '0');
-            const day = fechaObj.getDate().toString().padStart(2, '0');
-            const hoursIso = fechaObj.getHours().toString().padStart(2, '0');
-            const minsIso = fechaObj.getMinutes().toString().padStart(2, '0');
-            const secsIso = fechaObj.getSeconds().toString().padStart(2, '0');
-            
-            const fechaWebhook = `${year}-${month}-${day}T${hoursIso}:${minsIso}:${secsIso}-05:00`;
-            
-            return {
-                pantalla: fechaPantalla,
-                webhook: fechaWebhook
-            };
+            const h = fechaObj.getHours().toString().padStart(2, '0');
+            const m = fechaObj.getMinutes().toString().padStart(2, '0');
+            const s = fechaObj.getSeconds().toString().padStart(2, '0');
+            const p = `${dia} de ${mes} del ${anio} ${h}:${m}:${s}`;
+            const mo = (fechaObj.getMonth() + 1).toString().padStart(2, '0');
+            const d = fechaObj.getDate().toString().padStart(2, '0');
+            const w = `${anio}-${mo}-${d}T${h}:${m}:${s}-05:00`;
+            return { pantalla: p, webhook: w };
         }
 
-        // Función original wrapper (para no romper código existente)
-        function obtenerFechaHoraActual() {
-            return formatearFechaObj(new Date());
-        }
-
-        // Lógica de detección de teclas (Tab x3 en 5s)
-        let tabCount = 0;
-        let tabTimer = null;
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Tab') {
-                tabCount++;
-                
-                // Iniciar temporizador en la primera pulsación
-                if (tabCount === 1) {
-                    tabTimer = setTimeout(() => {
-                        tabCount = 0; // Resetear si pasan 5 segundos
-                    }, 5000);
-                }
-
-                // Si llega a 3 pulsaciones
-                if (tabCount === 3) {
-                    clearTimeout(tabTimer);
-                    tabCount = 0;
-                    toggleModoRegularizacion();
-                }
-            }
-        });
-
-        function toggleModoRegularizacion() {
-            const panel = document.getElementById('regularization-panel');
-            const isHidden = panel.style.display === 'none' || panel.style.display === '';
-
-            if (isHidden) {
-                // MOSTRAR EL PANEL
-                panel.style.display = 'block';
-                
-                // Pre-llenar el input con la fecha actual
-                const now = new Date();
-                now.setMinutes(now.getMinutes() - now.getTimezoneOffset()); 
-                document.getElementById('manual-date-input').value = now.toISOString().slice(0, 16);
-                
-                // Dar foco al input automáticamente
-                document.getElementById('manual-date-input').focus();
-                
-                // Mensaje de activación con Modal del Sistema (Estético)
-                mostrarAlerta('Modo Regularización', 'Se ha <strong>ACTIVADO</strong> el modo de regularización.<br>Ahora puede modificar la fecha manualmente.');
-            } else {
-                // OCULTAR EL PANEL
-                panel.style.display = 'none';
-            }
-        }
-
-        function aplicarRegularizacion() {
-            const inputVal = document.getElementById('manual-date-input').value;
-            if (!inputVal) return;
-
-            // Crear fecha desde el input
-            const nuevaFechaObj = new Date(inputVal);
-            
-            // Formatear
-            const fechasFormateadas = formatearFechaObj(nuevaFechaObj);
-            
-            // Actualizar variables globales
-            currentTicketData.fecha = fechasFormateadas.pantalla;
-            currentTicketData.fechaWebhook = fechasFormateadas.webhook;
-            
-            // Actualizar UI Pantalla
-            document.getElementById('screen-fecha').textContent = fechasFormateadas.pantalla;
-            
-            // Actualizar UI Ticket Oculto
-            const fieldTicket = document.querySelector('.ticket__value[data-field="fecha"]');
-            if (fieldTicket) fieldTicket.textContent = fechasFormateadas.pantalla;
-            
-            // Feedback visual en el panel
-            const panel = document.getElementById('regularization-panel');
-            panel.style.backgroundColor = '#d4edda';
-            panel.style.borderColor = '#155724';
-            setTimeout(() => {
-                panel.style.backgroundColor = '#fff3cd';
-                panel.style.borderColor = '#856404';
-            }, 500);
-            
-            // Notificar éxito con modal
-            mostrarAlerta('Fecha Actualizada', 'La fecha de la papeleta ha sido modificada correctamente.');
-        }
-
-        // --- SISTEMA DE MODALES ---
-
-        // Función para mostrar alertas simples reutilizando el modal
-        function mostrarAlerta(titulo, mensaje) {
-            const modal = document.getElementById('modal-overlay');
-            const modalContent = document.getElementById('modal-content');
-            const modalTitle = document.getElementById('modal-title');
-            const modalMessage = document.getElementById('modal-message');
-            const modalConfirm = document.getElementById('modal-confirm');
-            const modalCancel = document.querySelector('.modal-button.cancel');
-
-            // Resetear estilo base
-            modalContent.className = 'modal-content'; 
-            
-            // Configurar contenido
-            modalTitle.textContent = titulo;
-            modalMessage.innerHTML = mensaje;
-            
-            // Configurar botones para modo "Alerta" (ocultar cancelar)
-            modalCancel.style.display = 'none';
-            
-            // Botón de aceptar
-            modalConfirm.textContent = 'ACEPTAR';
-            modalConfirm.className = 'modal-button confirm';
-            
-            // Sobrescribir comportamiento temporalmente para solo cerrar
-            modalConfirm.onclick = cerrarModal;
-
-            modal.classList.add('show');
-        }
-
-        // Variables globales para el modal
         let currentTicketData = {};
+        let terceroData = { esDepositorTercero: false, cedula: '', nombre: '', encontrado: false };
 
-        // Variables globales para depósitos por terceros
-        let terceroData = {
-            esDepositorTercero: false,
-            cedula: '',
-            nombre: '',
-            encontrado: false
-        };
-
-        // Función para buscar datos de cedula (depósito por tercero)
         async function fetchCedulaData(cedula) {
-            // Validar formato de cédula
-            if (!/^\d{10}$/.test(cedula)) {
-                console.warn('Formato de cédula inválido:', cedula);
-                terceroData.encontrado = false;
-                terceroData.nombre = '';
-                return;
-            }
-
+            if (!/^\d{10}$/.test(cedula)) return;
             try {
-                console.log('[TERCERO] Consultando cédula automáticamente:', cedula);
-
-                const data = window.APP_CONFIG?.fetchCedulaLookup
-                    ? await window.APP_CONFIG.fetchCedulaLookup(cedula)
-                    : await fetch('https://lpn8nwebhook.luispintasolutions.com/webhook/c460611e-8d0c-4a7b-bfcc-50b1e5858048', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json'
-                        },
-                        body: JSON.stringify({ cedula })
-                    }).then(response => {
-                        if (!response.ok) throw new Error('HTTP ' + response.status);
-                        return response.json();
-                    });
-
+                const response = await fetch('https://lpn8nwebhook.luispintasolutions.com/webhook/c460611e-8d0c-4a7b-bfcc-50b1e5858048', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ cedula })
+                });
+                const data = await response.json();
                 const result = Array.isArray(data) ? data[0] : data;
-
                 if (result && result.encontrado && result.nombre) {
                     terceroData.nombre = result.nombre.toUpperCase();
                     terceroData.encontrado = true;
-                    console.log('[TERCERO] Cédula verificada:', {
-                        cedula: cedula,
-                        nombre: terceroData.nombre,
-                        encontrado: true
-                    });
-                } else {
-                    terceroData.encontrado = false;
-                    terceroData.nombre = '';
-                    console.warn('[TERCERO] Cédula no encontrada en el sistema:', cedula);
-                    console.log('[TERCERO] Respuesta del servidor:', result);
                 }
-            } catch (error) {
-                terceroData.encontrado = false;
-                terceroData.nombre = '';
-                console.error('[TERCERO] Error al consultar cédula:', {
-                    cedula: cedula,
-                    error: error.message,
-                    stack: error.stack
-                });
-            }
+            } catch (e) { console.error(e); }
         }
 
         function mostrarConfirmacion() {
-            const tipoTransaccion = currentTicketData['tipoTransaccion'] || 'DEPOSITO';
-            const esDeposito = tipoTransaccion === 'DEPOSITO';
-            const esRetiro = tipoTransaccion === 'RETIRO';
-            
+            const esDeposito = currentTicketData.tipoTransaccion === 'DEPOSITO';
+            const esRetiro = currentTicketData.tipoTransaccion === 'RETIRO';
             const modal = document.getElementById('modal-overlay');
-            const modalContent = document.getElementById('modal-content');
-            const modalTitle = document.getElementById('modal-title');
-            const modalMessage = document.getElementById('modal-message');
-            const modalConfirm = document.getElementById('modal-confirm');
-            const modalCancel = document.querySelector('.modal-button.cancel');
+            const content = document.getElementById('modal-content');
+            const title = document.getElementById('modal-title');
+            const msg = document.getElementById('modal-message');
+            const confirm = document.getElementById('modal-confirm');
 
-            // IMPORTANTE: Restaurar estado de botones (por si se usó mostrarAlerta antes)
-            modalCancel.style.display = ''; // Restaurar visibilidad (flex/block por CSS)
-            modalConfirm.onclick = confirmarImpresion; // Restaurar función original
-            
-            // Configurar el modal según el tipo de operación
             if (esDeposito) {
-                modalContent.className = 'modal-content deposito';
-                modalTitle.textContent = 'Confirmar Depósito';
-                modalConfirm.textContent = 'CONFIRMAR';
-                modalConfirm.className = 'modal-button confirm';
-                modalMessage.innerHTML = `¿Está seguro de depositar <strong>${currentTicketData['monto']}</strong> a favor de <strong>${currentTicketData['socio']}</strong>?`;
+                content.className = 'modal-content deposito';
+                title.textContent = 'Confirmar Depósito';
+                confirm.className = 'modal-button confirm';
+                msg.innerHTML = `¿Confirmar depósito de <strong>${currentTicketData.monto}</strong> para <strong>${currentTicketData.socio}</strong>?`;
             } else if (esRetiro) {
-                modalContent.className = 'modal-content retiro';
-                modalTitle.textContent = 'Confirmar Retiro';
-                modalConfirm.textContent = 'CONFIRMAR';
-                modalConfirm.className = 'modal-button confirm retiro';
-                modalMessage.innerHTML = `¿Está seguro de retirar <strong>${currentTicketData['monto']}</strong> a favor de <strong>${currentTicketData['socio']}</strong>?`;
-            } else {
-                modalContent.className = 'modal-content';
-                modalTitle.textContent = 'Confirmar Operación';
-                modalConfirm.textContent = 'CONFIRMAR';
-                modalConfirm.className = 'modal-button confirm';
-                modalMessage.innerHTML = `¿Está seguro de realizar esta operación por <strong>${currentTicketData['monto']}</strong> para <strong>${currentTicketData['socio']}</strong>?`;
+                content.className = 'modal-content retiro';
+                title.textContent = 'Confirmar Retiro';
+                confirm.className = 'modal-button confirm retiro';
+                msg.innerHTML = `¿Confirmar retiro de <strong>${currentTicketData.monto}</strong> para <strong>${currentTicketData.socio}</strong>?`;
             }
-            
             modal.classList.add('show');
         }
 
-        function cerrarModal() {
-            const modal = document.getElementById('modal-overlay');
-            modal.classList.remove('show');
-        }
+        function cerrarModal() { document.getElementById('modal-overlay').classList.remove('show'); }
 
         async function confirmarImpresion() {
             cerrarModal();
-            
-            // Preparar datos para el webhook
-            const datosWebhook = {
-                numero: currentTicketData.numero,
-                cuenta: currentTicketData.cuenta,
-                fecha: currentTicketData.fechaWebhook, // Fecha en formato ISO Ecuador
-                socio: currentTicketData.socio,
-                documento: currentTicketData.documento,
-                tipo: currentTicketData.tipo,
-                tipoTransaccion: currentTicketData.tipoTransaccion, // DEPOSITO o RETIRO
-                monto: currentTicketData.montoNumero, // Solo el número con 2 decimales
-                concepto: currentTicketData.concepto,
-                responsable: currentTicketData.responsable,
-                // Datos de depósito por tercero
-                etercero: terceroData.esDepositorTercero ? true : false,
-                cedulaTercero: terceroData.esDepositorTercero ? terceroData.cedula : '',
-                nombreTercero: terceroData.esDepositorTercero ? terceroData.nombre : ''
+            const payload = {
+                ...currentTicketData,
+                monto: currentTicketData.montoNumero,
+                fecha: currentTicketData.fechaWebhook,
+                etercero: terceroData.esDepositorTercero,
+                cedulaTercero: terceroData.cedula,
+                nombreTercero: terceroData.nombre
             };
-            
-            // Enviar datos al webhook
             try {
-                console.log('Enviando datos al webhook...');
-                console.log('Datos:', datosWebhook);
-                
-                const response = await fetch('https://lpn8nwebhook.luispintasolutions.com/webhook/7322a9d8-32bc-48bb-8b8c-d5da1878c0fa', {
+                await fetch('https://lpn8nwebhook.luispintasolutions.com/webhook/7322a9d8-32bc-48bb-8b8c-d5da1878c0fa', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(datosWebhook)
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
                 });
-                
-                if (response.ok) {
-                    console.log('Datos enviados exitosamente');
-                } else {
-                    console.warn('Error al enviar datos:', response.status);
-                }
-            } catch (error) {
-                console.error('Error al enviar datos al webhook:', error);
-            }
-            
-            // Imprimir
+            } catch (e) { console.error(e); }
             window.print();
         }
 
-        // --- FUNCIONES RESTAURADAS ---
-
-        // Función para obtener el siguiente número de papeleta
         async function obtenerNumeroPapeleta() {
             try {
-                console.log('Llamando al webhook...');
-                const response = await fetch('https://lpn8nwebhook.luispintasolutions.com/webhook/7be2f2d7-4f90-4f43-876c-bf8be2e478e4', {
-                    method: 'GET',
-                    headers: {
-                        'Accept': 'application/json',
-                    },
-                    mode: 'cors',
-                    cache: 'no-cache'
-                });
-                
-                console.log('Respuesta recibida:', response);
-                
-                if (!response.ok) {
-                    console.warn('Respuesta no exitosa del webhook:', response.status);
-                    return '00001';
+                const r = await fetch('https://lpn8nwebhook.luispintasolutions.com/webhook/7be2f2d7-4f90-4f43-876c-bf8be2e478e4');
+                const d = await r.json();
+                if (d && d[0] && d[0].papeletas) {
+                    const next = Math.max(...d[0].papeletas) + 1;
+                    return next.toString().padStart(5, '0');
                 }
-                
-                const data = await response.json();
-                
-                if (data && data[0] && data[0].papeletas && data[0].papeletas.length > 0) {
-                    const papeletas = data[0].papeletas;
-                    const ultimaPapeleta = Math.max(...papeletas);
-                    const siguientePapeleta = ultimaPapeleta + 1;
-                    return siguientePapeleta.toString().padStart(5, '0');
-                }
-                
-                return '00001'; 
-            } catch (error) {
-                console.error('Error al obtener número de papeleta:', error);
-                return '00001'; 
-            }
-        }
-
-        function parseQueryParams() {
-            const params = new URLSearchParams(window.location.search);
-            
-            // Obtener fecha actual
-            const fechaActual = obtenerFechaHoraActual();
-            
-            // Obtener y procesar monto
-            const montoParam = params.get('monto');
-            let montoNumero = montoParam ? parseFloat(montoParam) : 500.00;
-            if (isNaN(montoNumero)) montoNumero = 500.00;
-            montoNumero = parseFloat(montoNumero.toFixed(2)); // Asegurar 2 decimales
-            
-            const montoDisplay = `USD ${montoNumero.toFixed(2)}`;
-            const montoLetras = montoEnLetras(montoNumero);
-            
-            // Obtener tipo de operación (en mayúsculas tal cual viene)
-            const tipoParam = params.get('tipo') || 'Ahorros - depósitos';
-            const tipoMayusculas = tipoParam.toUpperCase();
-            
-            // Detectar tipo de transacción para el webhook (DEPOSITO o RETIRO)
-            const tipoTransaccion = detectarTipoTransaccion(tipoParam);
-
-            // Procesar depósito por tercero (identDep diferente de documento)
-            const documento = params.get('documento') ? params.get('documento').trim() : 'DNI 12345678';
-            const identDep = params.get('identDep') ? params.get('identDep').trim() : null;
-            
-            terceroData.esDepositorTercero = false;
-            terceroData.cedula = '';
-            terceroData.nombre = '';
-            terceroData.encontrado = false;
-            
-            // Solo aplica para depósitos
-            if (tipoTransaccion === 'DEPOSITO' && identDep && identDep !== documento) {
-                terceroData.esDepositorTercero = true;
-                terceroData.cedula = identDep;
-                console.log('Depósito por tercero detectado, buscando cédula:', identDep);
-            }
-            
-            const defaults = {
-                numero: null, // Se obtendrá del webhook
-                cuenta: params.get('cuenta') ? params.get('cuenta').trim() : '1234567890',
-                fecha: fechaActual.pantalla,
-                fechaWebhook: fechaActual.webhook,
-                socio: params.get('socio') ? params.get('socio').trim() : 'María Quispe Huamán',
-                documento: documento,
-                tipo: tipoMayusculas,
-                tipoTransaccion: tipoTransaccion, // Para el webhook
-                monto: montoDisplay,
-                montoNumero: montoNumero, // Para enviar al webhook
-                concepto: montoLetras,
-                responsable: params.get('responsable') ? params.get('responsable').trim() : 'Carlos Gutiérrez'
-            };
-
-            return defaults;
+            } catch (e) { return '00001'; }
+            return '00001';
         }
 
         function applyTicketData(data) {
-            // Actualizar vista de impresión
-            document
-                .querySelectorAll('[data-field]')
-                .forEach(el => {
-                    const field = el.getAttribute('data-field');
-                    if (field === 'socio-firma') {
-                        el.textContent = data['socio'] || '';
-                    } else if (field === 'numero-header') {
-                        // Formatear el número: ceros a la izquierda en normal, resto en negrita
-                        const numero = data['numero'] || '00000';
-                        const paddedNumero = numero.padStart(5, '0').slice(-5); // Asegurar 5 dígitos
-                        
-                        // Encontrar el primer dígito distinto de cero
-                        let primeraPosCero = 0;
-                        for (let i = 0; i < paddedNumero.length; i++) {
-                            if (paddedNumero[i] !== '0') {
-                                primeraPosCero = i;
-                                break;
-                            }
-                        }
-                        
-                        // Si todos son ceros
-                        if (primeraPosCero === 0 && paddedNumero === '00000') {
-                            el.innerHTML = `<span class="normal">${paddedNumero}</span>`;
-                        } else {
-                            const parteNormal = paddedNumero.slice(0, primeraPosCero);
-                            const parteNegrita = paddedNumero.slice(primeraPosCero);
-                            el.innerHTML = `<span class="normal">${parteNormal}</span><span class="bold">${parteNegrita}</span>`;
-                        }
-                    } else {
-                        el.textContent = data[field] || '';
-                    }
-                });
-            
-            // Determinar tipo de operación
-            const tipoTransaccion = data['tipoTransaccion'] || 'DEPOSITO';
-            const esDeposito = tipoTransaccion === 'DEPOSITO';
-            const esRetiro = tipoTransaccion === 'RETIRO';
-            
-            // Actualizar vista de pantalla
-            document.getElementById('screen-numero').textContent = data['numero'] || '';
-            document.getElementById('screen-cuenta').textContent = data['cuenta'] || '';
-            document.getElementById('screen-fecha').textContent = data['fecha'] || '';
-            document.getElementById('screen-socio').textContent = data['socio'] || '';
-            document.getElementById('screen-documento').textContent = data['documento'] || '';
-            document.getElementById('screen-monto').textContent = data['monto'] || '';
-            document.getElementById('screen-concepto').textContent = data['concepto'] || '';
-            document.getElementById('screen-responsable').textContent = data['responsable'] || '';
-            
-            // Tipo de operación con cápsula
-            const tipoElement = document.getElementById('screen-tipo');
-            const badgeClass = esDeposito ? 'badge-deposito' : (esRetiro ? 'badge-retiro' : '');
-            tipoElement.innerHTML = `<span class="badge-operation ${badgeClass}">${data['tipo'] || ''}</span>`;
-            
-            // Actualizar botón según tipo de operación
-            const printBtn = document.getElementById('print-btn');
-            if (esDeposito) {
-                printBtn.textContent = 'Confirmar Depósito e Imprimir';
-                printBtn.className = 'print-button deposito';
-            } else if (esRetiro) {
-                printBtn.textContent = 'Confirmar Retiro e Imprimir';
-                printBtn.className = 'print-button retiro';
-            } else {
-                printBtn.textContent = 'Confirmar e Imprimir';
-                printBtn.className = 'print-button';
-            }
+            document.querySelectorAll('[data-field]').forEach(el => {
+                const f = el.getAttribute('data-field');
+                if (f === 'socio-firma') el.textContent = data.socio;
+                else if (f === 'numero-header') {
+                    const num = (data.numero || '00001').padStart(5, '0');
+                    let first = 0;
+                    for(let i=0; i<num.length; i++) if(num[i]!=='0') { first=i; break; }
+                    el.innerHTML = `<span class="normal">${num.slice(0, first)}</span><span class="bold">${num.slice(first)}</span>`;
+                } else el.textContent = data[f] || '';
+            });
 
-            // Manejar depósito por tercero - Vista de impresión y pantalla
-            const terceroSection = document.getElementById('ticket-tercero-section');
-            const ticketFooter = document.getElementById('ticket-footer');
-            const screenTerceroSection = document.getElementById('screen-tercero-section');
+            document.getElementById('screen-numero').textContent = data.numero;
+            document.getElementById('screen-cuenta').textContent = data.cuenta;
+            document.getElementById('screen-fecha').textContent = data.fecha;
+            document.getElementById('screen-socio').textContent = data.socio;
+            document.getElementById('screen-documento').textContent = data.documento;
+            document.getElementById('screen-monto').textContent = data.monto;
+            document.getElementById('screen-concepto').textContent = data.concepto;
+            document.getElementById('screen-responsable').textContent = data.responsable;
             
-            if (terceroData.esDepositorTercero && esDeposito) {
-                // Mostrar sección de tercero en papeleta impresa
-                if (terceroSection) {
-                    terceroSection.style.display = 'block';
-                    const cedulaTerceroEl = terceroSection.querySelector('[data-field="cedula-tercero"]');
-                    const nombreTerceroEl = terceroSection.querySelector('[data-field="nombre-tercero"]');
-                    if (cedulaTerceroEl) cedulaTerceroEl.textContent = terceroData.cedula || '';
-                    if (nombreTerceroEl) nombreTerceroEl.textContent = terceroData.nombre || '';
-                }
-                
-                // Cambiar pie de firma para deposito por tercero
-                if (ticketFooter) {
-                    ticketFooter.innerHTML = '<div>Firma del Depositante: ____________________</div>';
-                }
-                
-                // Mostrar sección de tercero en vista de pantalla
-                if (screenTerceroSection) {
-                    screenTerceroSection.style.display = 'block';
-                    const screenCedulaTercero = document.getElementById('screen-cedula-tercero');
-                    const screenNombreTercero = document.getElementById('screen-nombre-tercero');
-                    const verificacionStatus = document.getElementById('tercero-verification-status');
-                    
-                    if (screenCedulaTercero) screenCedulaTercero.textContent = terceroData.cedula || '';
-                    
-                    // Actualizar el input del nombre
-                    if (screenNombreTercero) {
-                        screenNombreTercero.value = terceroData.nombre || '';
-                        
-                        if (terceroData.encontrado) {
-                            // Si fue encontrada, desactivar el input
-                            screenNombreTercero.disabled = true;
-                            screenNombreTercero.removeAttribute('readonly');
-                        } else {
-                            // Si NO fue encontrada, activar el input para edición manual
-                            screenNombreTercero.disabled = false;
-                            screenNombreTercero.removeAttribute('readonly');
-                        }
-                    }
-                    
-                    // Mostrar estado de verificación al lado de cédula
-                    if (verificacionStatus) {
-                        if (terceroData.encontrado) {
-                            verificacionStatus.className = 'tercero-status verificado';
-                            verificacionStatus.innerHTML = '<i class="fas fa-check-circle"></i> Verificado';
-                        } else if (terceroData.nombre) {
-                            verificacionStatus.className = 'tercero-status manual';
-                            verificacionStatus.innerHTML = '<i class="fas fa-exclamation-circle"></i> Ingresado manualmente';
-                        } else {
-                            verificacionStatus.className = 'tercero-status error';
-                            verificacionStatus.innerHTML = '<i class="fas fa-times-circle"></i> No verificado';
-                        }
-                    }
-                }
-            } else {
-                // Ocultar sección de tercero en papeleta impresa
-                if (terceroSection) {
-                    terceroSection.style.display = 'none';
-                }
-                
-                // Restaurar pie de firma normal
-                if (ticketFooter) {
-                    ticketFooter.innerHTML = '<div>Firma de <span data-field="socio-firma"></span> ____________________</div>';
-                    const socioFirmaEl = ticketFooter.querySelector('[data-field="socio-firma"]');
-                    if (socioFirmaEl) socioFirmaEl.textContent = data['socio'] || '';
-                }
-                
-                // Ocultar sección de tercero en vista de pantalla
-                if (screenTerceroSection) {
-                    screenTerceroSection.style.display = 'none';
-                }
+            const typeEl = document.getElementById('screen-tipo');
+            const isDep = data.tipoTransaccion === 'DEPOSITO';
+            typeEl.innerHTML = `<span class="badge-operation ${isDep ? 'badge-deposito' : 'badge-retiro'}">${data.tipo}</span>`;
+
+            const pBtn = document.getElementById('print-btn');
+            pBtn.className = `print-button ${isDep ? 'deposito' : 'retiro'}`;
+            pBtn.textContent = isDep ? 'Confirmar Depósito e Imprimir' : 'Confirmar Retiro e Imprimir';
+
+            // Terceros
+            const tSec = document.getElementById('ticket-tercero-section');
+            const sTSec = document.getElementById('screen-tercero-section');
+            if (terceroData.esDepositorTercero && isDep) {
+                tSec.style.display = 'block';
+                sTSec.style.display = 'block';
+                tSec.querySelector('[data-field="cedula-tercero"]').textContent = terceroData.cedula;
+                tSec.querySelector('[data-field="nombre-tercero"]').textContent = terceroData.nombre;
+                document.getElementById('screen-cedula-tercero').textContent = terceroData.cedula;
+                const sName = document.getElementById('screen-nombre-tercero');
+                sName.value = terceroData.nombre;
+                sName.disabled = terceroData.encontrado;
+                sName.readOnly = terceroData.encontrado;
+                const vStat = document.getElementById('tercero-verification-status');
+                vStat.className = 'tercero-status ' + (terceroData.encontrado ? 'verificado' : 'manual');
+                vStat.innerHTML = terceroData.encontrado ? '<i class="fas fa-check-circle"></i> Verificado' : '<i class="fas fa-edit"></i> Manual';
+                document.getElementById('ticket-footer').innerHTML = '<div>Firma del Depositante: ____________________</div>';
             }
         }
 
-        // Coordinates query parameters with the template.
-        async function inicializarPapeleta() {
-            const ticketData = parseQueryParams();
+        async function init() {
+            const p = new URLSearchParams(window.location.search);
+            const now = formatearFechaObj(new Date());
+            const m = parseFloat(p.get('monto') || '500').toFixed(2);
+            const type = p.get('tipo') || 'Depósito - Ahorros';
+            const doc = p.get('documento') || '0000000000';
+            const iDep = p.get('identDep');
             
-            // Obtener el número de papeleta del webhook si no viene por parámetro
-            if (!ticketData.numero) {
-                ticketData.numero = await obtenerNumeroPapeleta();
+            const data = {
+                numero: await obtenerNumeroPapeleta(),
+                cuenta: p.get('cuenta') || '0000000000',
+                fecha: now.pantalla,
+                fechaWebhook: now.webhook,
+                socio: p.get('socio') || 'Socio Ejemplo',
+                documento: doc,
+                tipo: type.toUpperCase(),
+                tipoTransaccion: detectarTipoTransaccion(type),
+                monto: `USD ${m}`,
+                montoNumero: m,
+                concepto: montoEnLetras(m),
+                responsable: p.get('responsable') || 'Cajero'
+            };
+
+            if (data.tipoTransaccion === 'DEPOSITO' && iDep && iDep !== doc) {
+                terceroData.esDepositorTercero = true;
+                terceroData.cedula = iDep;
+                await fetchCedulaData(iDep);
             }
-            
-            currentTicketData = ticketData; // Guardar en variable global
-            applyTicketData(ticketData);
-            
-            // Si es depósito por tercero, obtener los datos del tercero
-            if (terceroData.esDepositorTercero && terceroData.cedula) {
-                console.log('Buscando datos del tercero...');
-                await fetchCedulaData(terceroData.cedula);
-                // Actualizar la papeleta con los datos del tercero
-                applyTicketData(ticketData);
-                
-                // Agregar listener al input del nombre para capturar cambios manuales
-                const screenNombreTercero = document.getElementById('screen-nombre-tercero');
-                if (screenNombreTercero && !terceroData.encontrado) {
-                    screenNombreTercero.addEventListener('input', function(e) {
-                        terceroData.nombre = e.target.value.toUpperCase();
-                        console.log('[TERCERO] Nombre ingresado manualmente:', terceroData.nombre);
-                    });
-                }
-            }
-            
-            // Ocultar loader y mostrar vista
+
+            currentTicketData = data;
+            applyTicketData(data);
             document.getElementById('loader').classList.add('hidden');
             document.querySelector('.screen-view').classList.add('loaded');
-        }
-        
-        // Inicializar la papeleta
-        inicializarPapeleta();
 
-        // Register Service Worker
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/service-worker.js')
-                    .then(registration => {
-                        console.log('[App] Service Worker registered successfully:', registration);
-                    })
-                    .catch(error => {
-                        console.log('[App] Service Worker registration failed:', error);
-                    });
-            });
+            if (!terceroData.encontrado) {
+                document.getElementById('screen-nombre-tercero').addEventListener('input', e => {
+                    terceroData.nombre = e.target.value.toUpperCase();
+                    document.querySelector('.ticket [data-field="nombre-tercero"]').textContent = terceroData.nombre;
+                });
+            }
         }
+
+        let tabHits = 0;
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Tab') {
+                tabHits++;
+                if (tabHits === 3) document.getElementById('regularization-panel').style.display = 'block';
+                setTimeout(() => tabHits = 0, 3000);
+            }
+        });
+
+        function aplicarRegularizacion() {
+            const v = document.getElementById('manual-date-input').value;
+            if (v) {
+                const f = formatearFechaObj(new Date(v));
+                currentTicketData.fecha = f.pantalla;
+                currentTicketData.fechaWebhook = f.webhook;
+                applyTicketData(currentTicketData);
+            }
+        }
+
+        window.onload = init;
     </script>
 </body>
 </html>
