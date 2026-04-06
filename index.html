@@ -83,6 +83,145 @@
             margin-bottom: 20px;
         }
 
+        .tercero-section {
+            margin-top: 20px;
+            padding: 20px;
+            border-left: 4px solid #28a745;
+            background-color: #fafaf9;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(40, 167, 69, 0.1);
+        }
+
+        .tercero-header {
+            font-weight: 600;
+            color: #155724;
+            background-color: transparent;
+            border: none;
+            border-radius: 0;
+            padding: 0 0 12px 0;
+            margin-bottom: 15px;
+            font-size: 12pt;
+            text-transform: uppercase;
+            text-align: left;
+            border-bottom: 2px solid #28a745;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tercero-header i {
+            color: #28a745;
+            font-size: 14pt;
+        }
+
+        .tercero-status {
+            font-size: 9pt;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 4px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .tercero-status i {
+            font-size: 11pt;
+        }
+
+        .tercero-status.verificado {
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #c8e6c9;
+        }
+
+        .tercero-status.manual {
+            background-color: #fff8e1;
+            color: #f57f17;
+            border: 1px solid #ffe082;
+        }
+
+        .tercero-status.error {
+            background-color: #ffebee;
+            color: #c62828;
+            border: 1px solid #ef9a9a;
+        }
+
+        .tercero-input {
+            width: 100%;
+            padding: 10px 14px;
+            font-size: 10pt;
+            border: 2px solid #e0e0e0;
+            border-radius: 4px;
+            font-family: inherit;
+            text-transform: uppercase;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .tercero-input:disabled {
+            background-color: #f5f5f5;
+            color: #424242;
+            cursor: not-allowed;
+            border-color: #e0e0e0;
+        }
+
+        .tercero-input:not(:disabled) {
+            background-color: #fffbf0;
+            color: #1a1a1a;
+            border-color: #ffc107;
+            cursor: text;
+        }
+
+        .tercero-input:not(:disabled):focus {
+            outline: none;
+            border-color: #ff9800;
+            box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.1);
+        }
+
+        .tercero-input::placeholder {
+            color: #b0bec5;
+            font-size: 9pt;
+        }
+
+        .tercero-field-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 12px;
+        }
+
+        .tercero-field-group.full {
+            grid-template-columns: 1fr;
+        }
+
+        .tercero-field {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .tercero-field-label {
+            font-weight: 600;
+            font-size: 9pt;
+            color: #424242;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tercero-field-value {
+            font-size: 10pt;
+            color: #1a1a1a;
+            padding: 8px 10px;
+            background-color: #f9f9f9;
+            border-radius: 3px;
+            border: 1px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 32px;
+        }
+
         .data-row {
             display: flex;
             justify-content: space-between;
@@ -316,6 +455,20 @@
             filter: grayscale(100%);
         }
 
+        .app-version {
+            font-size: 7pt;
+            color: #999;
+            letter-spacing: 0.5px;
+            margin-top: 3px;
+            font-weight: 300;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+
+        .brand-footer:hover .app-version {
+            opacity: 1;
+        }
+
         /* Vista de impresión (oculta en pantalla) */
         .print-view {
             display: none;
@@ -354,12 +507,12 @@
             left: 80mm;
             width: 200mm;
             height: 80mm;
-            padding: 8mm 10mm;
+            padding: 4mm 6mm;
             box-sizing: border-box;
             background: #ffffff;
             display: grid;
             grid-template-rows: auto 1fr auto;
-            gap: 4mm;
+            gap: 1.2mm;
             transform-origin: top left;
             transform: rotate(90deg);
             box-shadow: 0 0 0 0 transparent;
@@ -377,53 +530,92 @@
 
         .ticket__header h1 {
             margin: 0;
-            font-size: 14pt;
+            font-size: 11pt;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
+            line-height: 1;
         }
 
         .ticket__section {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 2mm 6mm;
+            gap: 0.5mm 2.5mm;
             font-size: 10pt;
         }
 
         .ticket__item {
             display: flex;
             flex-direction: column;
-            gap: 0.5mm;
+            gap: 0.2mm;
         }
 
         .ticket__label {
-            font-size: 8pt;
+            font-size: 7pt;
             text-transform: uppercase;
             color: #000000;
-            line-height: 1.2;
+            line-height: 1;
+            letter-spacing: 0.3px;
         }
 
         .ticket__value {
-            font-size: 10pt;
+            font-size: 9pt;
             font-weight: 600;
-            line-height: 1.25;
+            line-height: 1.15;
             color: #000000;
         }
 
         .ticket__footer {
-            font-size: 8pt;
+            font-size: 7pt;
             text-transform: uppercase;
             color: #000000;
-            padding-top: 2mm;
+            padding-top: 0.5mm;
+            line-height: 1.1;
+        }
+
+        .ticket__tercero {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3mm;
+            font-size: 8pt;
+            border-top: 0.5pt solid #000000;
+            padding-top: 0.5mm;
+            margin-top: 0.3mm;
+            background-color: transparent;
+            padding: 0;
+        }
+
+        .ticket__tercero-header {
+            font-size: 6pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #000000;
+            letter-spacing: 0.2px;
+            margin-bottom: 0.3mm;
+            padding-bottom: 0.3mm;
+            border-bottom: 0.5pt solid #000000;
+            line-height: 1;
+        }
+
+        .ticket__tercero-content {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.5mm 2mm;
+        }
+
+        .ticket__tercero .ticket__item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.1mm;
         }
 
         .ruc-badge {
             display: inline-block;
             background: #f0f0f0;
-            border: 1px solid #000000;
-            border-radius: 12px;
-            padding: 4px 12px;
-            font-size: 14pt;
-            line-height: 1.4;
+            border: 0.5pt solid #000000;
+            border-radius: 6px;
+            padding: 2px 8px;
+            font-size: 9pt;
+            line-height: 1.2;
         }
 
         .ruc-badge .label {
@@ -452,6 +644,8 @@
             margin: 0;
         }
     </style>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <!-- Loader -->
@@ -500,6 +694,27 @@
                 <span class="data-label">Responsable:</span>
                 <span class="data-value" id="screen-responsable"></span>
             </div>
+            <div id="screen-tercero-section" class="tercero-section" style="display: none;">
+                <div class="tercero-header">
+                    <i class="fas fa-user-check"></i>
+                    Depósito por un Tercero
+                </div>
+                <div class="tercero-field-group">
+                    <div class="tercero-field">
+                        <div class="tercero-field-label">Cédula del Depositante</div>
+                        <div class="tercero-field-value">
+                            <span id="screen-cedula-tercero"></span>
+                            <span id="tercero-verification-status" class="tercero-status"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="tercero-field-group full">
+                    <div class="tercero-field">
+                        <div class="tercero-field-label">Nombre del Depositante</div>
+                        <input type="text" id="screen-nombre-tercero" class="tercero-input" placeholder="Ingrese el nombre completo del depositante" disabled readonly>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Panel de Regularización -->
@@ -518,6 +733,7 @@
         <div class="brand-footer">
             <span class="brand-text">POWERED BY</span>
             <img src="img/lpsolutionsblack.webp" alt="LP Solutions Logo" class="brand-logo">
+            <div class="app-version">v2.1.0</div>
         </div>
     </div>
 
@@ -577,7 +793,20 @@
                         <span class="ticket__value" data-field="responsable"></span>
                     </div>
                 </div>
-                <div class="ticket__footer">
+                <div id="ticket-tercero-section" class="ticket__tercero" style="display: none;">
+                    <div class="ticket__tercero-header">Depósito por un Tercero</div>
+                    <div class="ticket__tercero-content">
+                        <div class="ticket__item">
+                            <span class="ticket__label">Cédula Depositante</span>
+                            <span class="ticket__value" data-field="cedula-tercero"></span>
+                        </div>
+                        <div class="ticket__item">
+                            <span class="ticket__label">Nombre Depositante</span>
+                            <span class="ticket__value" data-field="nombre-tercero"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ticket__footer" id="ticket-footer">
                     <div>Firma de <span data-field="socio-firma"></span> ____________________</div>
                 </div>
             </div>
@@ -845,6 +1074,68 @@
         // Variables globales para el modal
         let currentTicketData = {};
 
+        // Variables globales para depósitos por terceros
+        let terceroData = {
+            esDepositorTercero: false,
+            cedula: '',
+            nombre: '',
+            encontrado: false
+        };
+
+        // Función para buscar datos de cedula (depósito por tercero)
+        async function fetchCedulaData(cedula) {
+            // Validar formato de cédula
+            if (!/^\d{10}$/.test(cedula)) {
+                console.warn('Formato de cédula inválido:', cedula);
+                terceroData.encontrado = false;
+                terceroData.nombre = '';
+                return;
+            }
+
+            try {
+                console.log('[TERCERO] Consultando cédula automáticamente:', cedula);
+
+                const data = window.APP_CONFIG?.fetchCedulaLookup
+                    ? await window.APP_CONFIG.fetchCedulaLookup(cedula)
+                    : await fetch('https://lpn8nwebhook.luispintasolutions.com/webhook/c460611e-8d0c-4a7b-bfcc-50b1e5858048', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({ cedula })
+                    }).then(response => {
+                        if (!response.ok) throw new Error('HTTP ' + response.status);
+                        return response.json();
+                    });
+
+                const result = Array.isArray(data) ? data[0] : data;
+
+                if (result && result.encontrado && result.nombre) {
+                    terceroData.nombre = result.nombre.toUpperCase();
+                    terceroData.encontrado = true;
+                    console.log('[TERCERO] Cédula verificada:', {
+                        cedula: cedula,
+                        nombre: terceroData.nombre,
+                        encontrado: true
+                    });
+                } else {
+                    terceroData.encontrado = false;
+                    terceroData.nombre = '';
+                    console.warn('[TERCERO] Cédula no encontrada en el sistema:', cedula);
+                    console.log('[TERCERO] Respuesta del servidor:', result);
+                }
+            } catch (error) {
+                terceroData.encontrado = false;
+                terceroData.nombre = '';
+                console.error('[TERCERO] Error al consultar cédula:', {
+                    cedula: cedula,
+                    error: error.message,
+                    stack: error.stack
+                });
+            }
+        }
+
         function mostrarConfirmacion() {
             const tipoTransaccion = currentTicketData['tipoTransaccion'] || 'DEPOSITO';
             const esDeposito = tipoTransaccion === 'DEPOSITO';
@@ -904,7 +1195,11 @@
                 tipoTransaccion: currentTicketData.tipoTransaccion, // DEPOSITO o RETIRO
                 monto: currentTicketData.montoNumero, // Solo el número con 2 decimales
                 concepto: currentTicketData.concepto,
-                responsable: currentTicketData.responsable
+                responsable: currentTicketData.responsable,
+                // Datos de depósito por tercero
+                etercero: terceroData.esDepositorTercero ? true : false,
+                cedulaTercero: terceroData.esDepositorTercero ? terceroData.cedula : '',
+                nombreTercero: terceroData.esDepositorTercero ? terceroData.nombre : ''
             };
             
             // Enviar datos al webhook
@@ -992,6 +1287,22 @@
             
             // Detectar tipo de transacción para el webhook (DEPOSITO o RETIRO)
             const tipoTransaccion = detectarTipoTransaccion(tipoParam);
+
+            // Procesar depósito por tercero (identDep diferente de documento)
+            const documento = params.get('documento') ? params.get('documento').trim() : 'DNI 12345678';
+            const identDep = params.get('identDep') ? params.get('identDep').trim() : null;
+            
+            terceroData.esDepositorTercero = false;
+            terceroData.cedula = '';
+            terceroData.nombre = '';
+            terceroData.encontrado = false;
+            
+            // Solo aplica para depósitos
+            if (tipoTransaccion === 'DEPOSITO' && identDep && identDep !== documento) {
+                terceroData.esDepositorTercero = true;
+                terceroData.cedula = identDep;
+                console.log('Depósito por tercero detectado, buscando cédula:', identDep);
+            }
             
             const defaults = {
                 numero: null, // Se obtendrá del webhook
@@ -999,7 +1310,7 @@
                 fecha: fechaActual.pantalla,
                 fechaWebhook: fechaActual.webhook,
                 socio: params.get('socio') ? params.get('socio').trim() : 'María Quispe Huamán',
-                documento: params.get('documento') ? params.get('documento').trim() : 'DNI 43765432',
+                documento: documento,
                 tipo: tipoMayusculas,
                 tipoTransaccion: tipoTransaccion, // Para el webhook
                 monto: montoDisplay,
@@ -1078,6 +1389,83 @@
                 printBtn.textContent = 'Confirmar e Imprimir';
                 printBtn.className = 'print-button';
             }
+
+            // Manejar depósito por tercero - Vista de impresión y pantalla
+            const terceroSection = document.getElementById('ticket-tercero-section');
+            const ticketFooter = document.getElementById('ticket-footer');
+            const screenTerceroSection = document.getElementById('screen-tercero-section');
+            
+            if (terceroData.esDepositorTercero && esDeposito) {
+                // Mostrar sección de tercero en papeleta impresa
+                if (terceroSection) {
+                    terceroSection.style.display = 'block';
+                    const cedulaTerceroEl = terceroSection.querySelector('[data-field="cedula-tercero"]');
+                    const nombreTerceroEl = terceroSection.querySelector('[data-field="nombre-tercero"]');
+                    if (cedulaTerceroEl) cedulaTerceroEl.textContent = terceroData.cedula || '';
+                    if (nombreTerceroEl) nombreTerceroEl.textContent = terceroData.nombre || '';
+                }
+                
+                // Cambiar pie de firma para deposito por tercero
+                if (ticketFooter) {
+                    ticketFooter.innerHTML = '<div>Firma del Depositante: ____________________</div>';
+                }
+                
+                // Mostrar sección de tercero en vista de pantalla
+                if (screenTerceroSection) {
+                    screenTerceroSection.style.display = 'block';
+                    const screenCedulaTercero = document.getElementById('screen-cedula-tercero');
+                    const screenNombreTercero = document.getElementById('screen-nombre-tercero');
+                    const verificacionStatus = document.getElementById('tercero-verification-status');
+                    
+                    if (screenCedulaTercero) screenCedulaTercero.textContent = terceroData.cedula || '';
+                    
+                    // Actualizar el input del nombre
+                    if (screenNombreTercero) {
+                        screenNombreTercero.value = terceroData.nombre || '';
+                        
+                        if (terceroData.encontrado) {
+                            // Si fue encontrada, desactivar el input
+                            screenNombreTercero.disabled = true;
+                            screenNombreTercero.removeAttribute('readonly');
+                        } else {
+                            // Si NO fue encontrada, activar el input para edición manual
+                            screenNombreTercero.disabled = false;
+                            screenNombreTercero.removeAttribute('readonly');
+                        }
+                    }
+                    
+                    // Mostrar estado de verificación al lado de cédula
+                    if (verificacionStatus) {
+                        if (terceroData.encontrado) {
+                            verificacionStatus.className = 'tercero-status verificado';
+                            verificacionStatus.innerHTML = '<i class="fas fa-check-circle"></i> Verificado';
+                        } else if (terceroData.nombre) {
+                            verificacionStatus.className = 'tercero-status manual';
+                            verificacionStatus.innerHTML = '<i class="fas fa-exclamation-circle"></i> Ingresado manualmente';
+                        } else {
+                            verificacionStatus.className = 'tercero-status error';
+                            verificacionStatus.innerHTML = '<i class="fas fa-times-circle"></i> No verificado';
+                        }
+                    }
+                }
+            } else {
+                // Ocultar sección de tercero en papeleta impresa
+                if (terceroSection) {
+                    terceroSection.style.display = 'none';
+                }
+                
+                // Restaurar pie de firma normal
+                if (ticketFooter) {
+                    ticketFooter.innerHTML = '<div>Firma de <span data-field="socio-firma"></span> ____________________</div>';
+                    const socioFirmaEl = ticketFooter.querySelector('[data-field="socio-firma"]');
+                    if (socioFirmaEl) socioFirmaEl.textContent = data['socio'] || '';
+                }
+                
+                // Ocultar sección de tercero en vista de pantalla
+                if (screenTerceroSection) {
+                    screenTerceroSection.style.display = 'none';
+                }
+            }
         }
 
         // Coordinates query parameters with the template.
@@ -1092,6 +1480,23 @@
             currentTicketData = ticketData; // Guardar en variable global
             applyTicketData(ticketData);
             
+            // Si es depósito por tercero, obtener los datos del tercero
+            if (terceroData.esDepositorTercero && terceroData.cedula) {
+                console.log('Buscando datos del tercero...');
+                await fetchCedulaData(terceroData.cedula);
+                // Actualizar la papeleta con los datos del tercero
+                applyTicketData(ticketData);
+                
+                // Agregar listener al input del nombre para capturar cambios manuales
+                const screenNombreTercero = document.getElementById('screen-nombre-tercero');
+                if (screenNombreTercero && !terceroData.encontrado) {
+                    screenNombreTercero.addEventListener('input', function(e) {
+                        terceroData.nombre = e.target.value.toUpperCase();
+                        console.log('[TERCERO] Nombre ingresado manualmente:', terceroData.nombre);
+                    });
+                }
+            }
+            
             // Ocultar loader y mostrar vista
             document.getElementById('loader').classList.add('hidden');
             document.querySelector('.screen-view').classList.add('loaded');
@@ -1099,6 +1504,19 @@
         
         // Inicializar la papeleta
         inicializarPapeleta();
+
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(registration => {
+                        console.log('[App] Service Worker registered successfully:', registration);
+                    })
+                    .catch(error => {
+                        console.log('[App] Service Worker registration failed:', error);
+                    });
+            });
+        }
     </script>
 </body>
 </html>
